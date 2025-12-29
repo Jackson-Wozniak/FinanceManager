@@ -1,0 +1,17 @@
+﻿using Server.Core.Entities;
+
+namespace Server.Application.Users.Entities;
+
+public class User : BaseEntity
+{
+    public string Username { get; set; }
+    public string PasswordHash { get; set; }
+    
+    protected User() { }
+
+    public User(string username, string passwordHash)
+    {
+        Username = username;
+        PasswordHash = passwordHash;
+    }
+}

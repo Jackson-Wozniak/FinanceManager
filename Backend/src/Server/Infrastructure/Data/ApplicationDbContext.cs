@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Server.Application.Users.Entities;
 using Server.Core.Entities;
 
 namespace Server.Infrastructure.Data;
 
 public class ApplicationDbContext : DbContext
 {
+    public DbSet<User> Users { get; set; }
+    
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
         : base(options) { }
 
