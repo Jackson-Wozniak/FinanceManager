@@ -1,8 +1,13 @@
+using Server.API.Filters;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddLogging(logging => logging.AddConsole().AddDebug());
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<GlobalExceptionFilter>();
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
