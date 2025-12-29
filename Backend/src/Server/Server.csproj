@@ -24,7 +24,12 @@
     <ItemGroup>
       <Folder Include="API\Contracts\" />
       <Folder Include="API\Controllers\" />
-      <Folder Include="Application\" />
+      <Folder Include="Application\Accounts\" />
+      <Folder Include="Application\Transactions\" />
+      <Folder Include="Application\Users\Entities\" />
+      <Folder Include="Application\Users\Enums\" />
+      <Folder Include="Application\Users\Repositories\" />
+      <Folder Include="Application\Users\Services\" />
     </ItemGroup>
 
 </Project>

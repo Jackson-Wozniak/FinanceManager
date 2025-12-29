@@ -1,8 +1,16 @@
+using Microsoft.EntityFrameworkCore;
 using Server.API.Filters;
+using Server.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddLogging(logging => logging.AddConsole().AddDebug());
+
+var connectionString = builder.Configuration.GetConnectionString("FinanceManagerDbConnection");
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
 
 builder.Services.AddControllers(options =>
 {
