@@ -40,12 +40,12 @@ public class UserAuthService(UserRepository userRepository,
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
     
-    public async Task<UserContext> GetAuthenticatedUserAsync(bool doEagerLoad = true)
+    public async Task<UserContext> GetAuthenticatedUserAsync()
     {
         var username = httpContext.HttpContext?.User?.Identity?.Name;
         if (username is null) 
             throw new UnauthorizedException("Could not get username from token");
-        var user = await userRepository.FindByUsernameAsync(username, doEagerLoad);
+        var user = await userRepository.FindByUsernameAsync(username, false);
         
         if (user is null) 
             throw new NotFoundException($"No user ({username}) found");

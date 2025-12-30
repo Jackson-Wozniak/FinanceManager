@@ -1,6 +1,19 @@
-﻿namespace Server.Application.Users.Services;
+﻿using Server.Application.Users.Entities;
+using Server.Application.Users.Repositories;
+using Server.Application.Users.Security;
+using Server.Core.Exceptions;
 
-public class UserService
+namespace Server.Application.Users.Services;
+
+public class UserService(UserRepository userRepository)
 {
-    
+    public async Task<User> GetUserById(long userId)
+    {
+        var user = await userRepository.FindByIdAsync(userId, true);
+        
+        if (user is null) 
+            throw new NotFoundException($"No user found");
+
+        return user;
+    }
 }
