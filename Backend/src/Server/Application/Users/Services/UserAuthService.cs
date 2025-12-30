@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Server.Application.Users.Entities;
 using Server.Application.Users.Repositories;
+using Server.Application.Users.Security;
 using Server.Core.Exceptions;
 
 namespace Server.Application.Users.Services;
@@ -39,18 +40,16 @@ public class UserAuthService(UserRepository userRepository,
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
     
-    public async Task<User> GetUserByHttpContextAsync(bool doEagerLoad = true)
+    public async Task<UserContext> GetAuthenticatedUserAsync(bool doEagerLoad = true)
     {
         var username = httpContext.HttpContext?.User?.Identity?.Name;
-        if (username is null)
-        {
+        if (username is null) 
             throw new UnauthorizedException("Could not get username from token");
-        }
         var user = await userRepository.FindByUsernameAsync(username, doEagerLoad);
-        if (user is null)
-        {
+        
+        if (user is null) 
             throw new NotFoundException($"No user ({username}) found");
-        }
-        return user;
+        
+        return new UserContext(user.Id);
     }
 }

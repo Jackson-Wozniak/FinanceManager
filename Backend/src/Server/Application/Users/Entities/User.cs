@@ -1,4 +1,5 @@
-﻿using Server.Core.Entities;
+﻿using Server.Application.Accounts.Entities;
+using Server.Core.Entities;
 
 namespace Server.Application.Users.Entities;
 
@@ -6,6 +7,7 @@ public class User : BaseEntity
 {
     public string Username { get; set; }
     public string PasswordHash { get; set; }
+    public List<Account> Accounts { get; set; } = [];
     
     protected User() { }
 
