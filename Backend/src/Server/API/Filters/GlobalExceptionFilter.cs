@@ -10,12 +10,18 @@ public class GlobalExceptionFilter : IExceptionFilter
     {
         if (context.Exception is BaseException ex)
         {
-            context.Result = new JsonResult(ex);
+            context.Result = new JsonResult(ex.Message)
+            {
+                StatusCode = (int)ex.Status
+            };
         }
         else
         {
             var exception = new ServerException(context.Exception.Message);
-            context.Result = new JsonResult(exception);
+            context.Result = new JsonResult(exception.Message)
+            {
+                StatusCode = (int)exception.Status
+            };
         }
 
         context.ExceptionHandled = true;
