@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Server.Application.Users.Repositories;
 using Server.Application.Users.Services;
@@ -9,6 +10,13 @@ namespace Server.Tests.TestSetup;
 
 public class TestProviderFactory
 {
+    private static readonly Dictionary<string, string?> JwtSettings = new()
+    {
+        { "JwtSettings:SecretKey", "THIS_IS_A_VERY_SECRET_TEST_KEY_123456" },
+        { "JwtSettings:Issuer", "TestIssuer" },
+        { "JwtSettings:Audience", "TestAudience" }
+    };
+    
     public static IServiceProvider ServiceProvider()
     {
         var services = new ServiceCollection();
@@ -22,6 +30,13 @@ public class TestProviderFactory
         services.AddScoped<UserTokenRepository>();
         services.AddScoped<UserService>();
         services.AddScoped<UserAuthService>();
+
+        IConfiguration configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(JwtSettings)
+            .Build();
+        services.AddSingleton(configuration);
+        
+        services.AddHttpContextAccessor();
         
         var provider = services.BuildServiceProvider();
         

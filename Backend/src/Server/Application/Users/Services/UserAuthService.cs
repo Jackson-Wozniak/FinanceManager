@@ -9,6 +9,8 @@ namespace Server.Application.Users.Services;
 public class UserAuthService(UserRepository userRepository, 
     UserTokenRepository userTokenRepository, IHttpContextAccessor httpContext)
 {
+    private static readonly JwtSecurityTokenHandler TokenHandler = new();
+    
     public async Task<string> RegisterUserAsync(string username, string password)
     {
         if (await userRepository.FindByUsernameAsync(username) is not null)
@@ -20,7 +22,7 @@ public class UserAuthService(UserRepository userRepository,
         var user = new User(username, hashed);
         await userRepository.SaveAsync(user);
         var token = userTokenRepository.Generate(user.Username);
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        return TokenHandler.WriteToken(token);
     }
 
     public async Task<string> LoginUserAsync(string username, string password)
@@ -37,7 +39,7 @@ public class UserAuthService(UserRepository userRepository,
         }
         
         var token = userTokenRepository.Generate(user.Username);
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        return TokenHandler.WriteToken(token);
     }
     
     public async Task<UserContext> GetAuthenticatedUserAsync()
