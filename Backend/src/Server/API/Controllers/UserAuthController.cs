@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.API.Contracts;
+using Server.Application.Users.Security;
 using Server.Application.Users.Services;
 
 namespace Server.API.Controllers;
@@ -11,14 +12,16 @@ public class UserAuthController(UserAuthService userAuthService) : ControllerBas
     [HttpPost("register")]
     public async Task<IActionResult> RegisterUser([FromBody] CredentialsRequest request)
     {
-        var token = await userAuthService.RegisterUserAsync(request.Username, request.Password);
+        UserTokenContext token = await userAuthService.RegisterUserAsync(
+            request.Username, request.Password);
         return Ok(token);
     }
     
     [HttpPost("login")]
     public async Task<IActionResult> LoginUser([FromBody] CredentialsRequest request)
     {
-        var token = await userAuthService.LoginUserAsync(request.Username, request.Password);
+        UserTokenContext token = await userAuthService.LoginUserAsync(
+            request.Username, request.Password);
         return Ok(token);
     }
 }

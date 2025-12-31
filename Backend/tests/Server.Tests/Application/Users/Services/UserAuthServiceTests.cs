@@ -31,7 +31,7 @@ public class UserAuthServiceTests
         Assert.NotNull(user);
         Assert.Equal(username, user.Username);
         
-        var token = _tokenHandler.ReadJwtToken(tokenString);
+        var token = _tokenHandler.ReadJwtToken(tokenString.Token);
         var tokenUsername = token.Claims.Single(c => c.Type == ClaimTypes.Name).Value;
         Assert.Equal(username, tokenUsername);
         Assert.True(token.ValidTo > DateTime.UtcNow);
@@ -68,7 +68,7 @@ public class UserAuthServiceTests
 
         await userAuthService.RegisterUserAsync(username, password);
         var tokenString = await userAuthService.LoginUserAsync(username, password);
-        var token = _tokenHandler.ReadJwtToken(tokenString);
+        var token = _tokenHandler.ReadJwtToken(tokenString.Token);
         
         Assert.Equal(username, token.Claims.Single(c => c.Type == ClaimTypes.Name).Value);
     }

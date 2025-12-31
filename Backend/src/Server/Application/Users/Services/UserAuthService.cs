@@ -11,7 +11,7 @@ public class UserAuthService(UserRepository userRepository,
 {
     private static readonly JwtSecurityTokenHandler TokenHandler = new();
     
-    public async Task<string> RegisterUserAsync(string username, string password)
+    public async Task<UserTokenContext> RegisterUserAsync(string username, string password)
     {
         if (await userRepository.FindByUsernameAsync(username) is not null)
         {
@@ -22,10 +22,10 @@ public class UserAuthService(UserRepository userRepository,
         var user = new User(username, hashed);
         await userRepository.SaveAsync(user);
         var token = userTokenRepository.Generate(user.Username);
-        return TokenHandler.WriteToken(token);
+        return new UserTokenContext(TokenHandler.WriteToken(token));
     }
 
-    public async Task<string> LoginUserAsync(string username, string password)
+    public async Task<UserTokenContext> LoginUserAsync(string username, string password)
     {
         var user = await userRepository.FindByUsernameAsync(username);
         if (user is null)
@@ -39,7 +39,7 @@ public class UserAuthService(UserRepository userRepository,
         }
         
         var token = userTokenRepository.Generate(user.Username);
-        return TokenHandler.WriteToken(token);
+        return new UserTokenContext(TokenHandler.WriteToken(token));
     }
     
     public async Task<UserContext> GetAuthenticatedUserAsync()
