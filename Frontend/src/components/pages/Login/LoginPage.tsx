@@ -23,23 +23,18 @@ const LoginPage: React.FC = () => {
     return (
         <Page alignment="center">
             <Box component="form" onSubmit={handleSubmit} display="flex" flexDirection="column"
-                sx={{width: "60%", alignItems: "center", justifyContent: "center"}}>
-                <ToggleButtonGroup sx={{mb: "20px"}}
-                    value={isLogin ? "login" : "register"} exclusive
-                    onChange={() => setIsLogin(!isLogin)} aria-label="text alignment"
-                >
-                    <ToggleButton value="login" aria-label="left aligned">
-                        Login
-                    </ToggleButton>
-                    <ToggleButton value="register" aria-label="centered">
-                        Register
-                    </ToggleButton>
-                </ToggleButtonGroup>
+                sx={{width: "50%", alignItems: "center", justifyContent: "center"}}>
                 <TextField onChange={(e) => setUsername(e.target.value)} type="text" label="Username" 
                     variant="outlined" sx={{width: "60%", m: "10px"}}/>
                 <TextField onChange={(e) => setPassword(e.target.value)} type="password" label="Password" 
                     variant="outlined" sx={{width: "60%", m: "10px"}}/>
-                <Button onClick={handleSubmit} type="submit">Click</Button>
+                <Button onClick={handleSubmit} type="submit" variant="contained" sx={{m: "10px"}}>
+                    {isLogin ? "Login" : "Register"}
+                </Button>
+                <Button onClick={() => setIsLogin(!isLogin)} type="button" variant="text">
+                    {isLogin ? "Don't have an account? Click here to register." 
+                        : "Already have an account? Click here to login."}
+                </Button>
             </Box>
         </Page>
     )
