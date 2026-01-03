@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { createContext, Route, Routes, type RouterContext } from "react-router-dom"
 import AuthProvider from "./providers/AuthProvider"
 import LoginPage from "./components/pages/Login/LoginPage"
 import { ThemeProvider } from "@mui/material/styles"

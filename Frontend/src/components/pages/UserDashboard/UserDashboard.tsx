@@ -29,7 +29,6 @@ export const UserDashboard: React.FC = () => {
 
     return (
         <Page>
-            <Button onClick={auth.logout}>Logout</Button>
             <Typography>{user.username}</Typography>
         </Page>
     )
