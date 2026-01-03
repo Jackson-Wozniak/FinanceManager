@@ -2,18 +2,22 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../../providers/AuthProvider";
 import Page from "../../layout/Page";
 import { fetchGetUser } from "../../../api/UserClient";
-import type { UserBankAccountDto, UserDto } from "../../../types/User/UserDtoTypes";
-import { Box, Button, CircularProgress, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
+import type { User } from "../../../types/User/UserTypes";
+import type { BankAccount } from "../../../types/Account/AccountTypes";
 
 export const UserDashboard: React.FC = () => {
     const auth = useAuth();
-    const [user, setUser] = useState<UserDto | undefined>();
+    const [user, setUser] = useState<User | undefined>();
 
     useEffect(() => {
         const fetchUser = async () => {
             try{
                 if(auth.token == null) return;
                 const user = await fetchGetUser(auth.token);
+                if(user == null){
+                    throw new Error("Error after getting user from server");
+                }
                 setUser(user);
             }catch(e){
                 alert(e);
@@ -30,7 +34,7 @@ export const UserDashboard: React.FC = () => {
     return (
         <Page>
             <Typography sx={{color: "white"}}>{user.username}</Typography>
-            {user.bankAccounts.map((account: UserBankAccountDto, index: number) => {
+            {user.bankAccounts.map((account: BankAccount, index: number) => {
                 return (
                     <Box key={index} display="flex">
                         <Typography sx={{color: "white"}}>{account.name}</Typography>

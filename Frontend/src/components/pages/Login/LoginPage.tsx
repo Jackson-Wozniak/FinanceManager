@@ -17,9 +17,9 @@ const LoginPage: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try{
-            const token = isLogin ? await fetchLoginUser(username, password)
+            const userToken = isLogin ? await fetchLoginUser(username, password)
                 : await fetchRegisterUser(username, password);
-            auth.login(token);
+            auth.login(userToken.token);
             navigate("/dashboard");
         }catch(e){
             alert(e);
