@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../../providers/AuthProvider";
 import Page from "../../layout/Page";
 import { fetchGetUser } from "../../../api/UserClient";
-import type { UserDto } from "../../../types/User/UserDtoTypes";
-import { Button, CircularProgress, Typography } from "@mui/material";
+import type { UserBankAccountDto, UserDto } from "../../../types/User/UserDtoTypes";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 
 export const UserDashboard: React.FC = () => {
     const auth = useAuth();
@@ -29,7 +29,18 @@ export const UserDashboard: React.FC = () => {
 
     return (
         <Page>
-            <Typography>{user.username}</Typography>
+            <Typography sx={{color: "white"}}>{user.username}</Typography>
+            {user.bankAccounts.map((account: UserBankAccountDto, index: number) => {
+                return (
+                    <Box key={index} display="flex">
+                        <Typography sx={{color: "white"}}>{account.name}</Typography>
+                        <Typography sx={{color: "white"}}>{account.institutionName}</Typography>
+                        <Typography sx={{color: "white"}}>{account.accountType}</Typography>
+                        <Typography sx={{color: "white"}}>{account.balance}</Typography>
+                        <Typography sx={{color: "white"}}>{account.interestRate}</Typography>
+                    </Box>
+                )
+            })}
         </Page>
     )
 }
