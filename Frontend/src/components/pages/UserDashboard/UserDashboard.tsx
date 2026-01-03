@@ -37,13 +37,11 @@ export const UserDashboard: React.FC = () => {
 
     return (
         <Page>
-            <Box display="flex" width="100%" height="100%" flexDirection="column">
-                <SpaceEvenlyRow>
-                    <DisplayBalanceCard title="Net Worth" balance={user.netWorth}/>
-                    <DisplayBalanceCard title="Montly Interest Charges" balance={user.estimatedMonthlyInterestCharges}/>
-                </SpaceEvenlyRow>
-                <AccountSummaryBox bankAccounts={user.bankAccounts} creditAccounts={user.creditAccounts}/>
-            </Box>
+            <SpaceEvenlyRow>
+                <DisplayBalanceCard title="Net Worth" balance={user.netWorth}/>
+                <DisplayBalanceCard title="Montly Interest Charges" balance={user.estimatedMonthlyInterestCharges}/>
+            </SpaceEvenlyRow>
+            <AccountSummaryBox bankAccounts={user.bankAccounts} creditAccounts={user.creditAccounts}/>
         </Page>
     )
 }
