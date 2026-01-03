@@ -35,6 +35,8 @@ export const UserDashboard: React.FC = () => {
     return (
         <Page>
             <Typography sx={{color: "white"}}>{user.username}</Typography>
+            <Typography sx={{color: "white"}}>{user.netWorth}</Typography>
+            <Typography sx={{color: "white"}}>{user.estimatedMonthlyInterestCharges}%</Typography>
             {user.bankAccounts.map((account: BankAccount, index: number) => {
                 return (
                     <Box key={index} display="flex">

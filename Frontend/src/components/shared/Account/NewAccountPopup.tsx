@@ -1,5 +1,5 @@
 import type React from "react";
-import type { User } from "../../types/User/UserTypes";
+import type { User } from "../../../types/User/UserTypes";
 
 const NewAccountPopup: React.FC<{
     setUser: (user: User) => void

@@ -6,6 +6,8 @@ export interface UserTokenDto{
 
 export interface UserDto{
     username: string,
+    netWorth: number,
+    estimatedMonthlyInterestCharges: number,
     bankAccounts: BankAccountDto[],
     creditAccounts: CreditAccountDto[]
 }
