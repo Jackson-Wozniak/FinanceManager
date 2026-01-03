@@ -22,6 +22,7 @@ const AuthProvider: React.FC<{
 
     useEffect(() => {
         if (!token) navigate('/login');
+        navigate("/dashboard");
     }, [token, navigate]);
 
     const login = (newToken: string) => {
