@@ -44,4 +44,13 @@ export const DarkTheme = createTheme({
             secondary: "#d0d0d0ff"
         },
     },
+    components: {
+        MuiTypography: {
+            styleOverrides: {
+                root: {
+                    color: "#ffffff",
+                },
+            },
+        }
+    }
 });
