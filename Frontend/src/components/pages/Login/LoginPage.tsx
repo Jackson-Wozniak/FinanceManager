@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../../providers/AuthProvider";
 import { fetchLoginUser, fetchRegisterUser } from "../../../api/UserAuthClient";
 import { Box, Button, TextField, Typography } from "@mui/material";
@@ -13,6 +13,10 @@ const LoginPage: React.FC = () => {
     const [isLogin, setIsLogin] = useState<boolean>(true);
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+
+    useEffect(() => {
+        if(auth.token != null) navigate("/dashboard");
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();

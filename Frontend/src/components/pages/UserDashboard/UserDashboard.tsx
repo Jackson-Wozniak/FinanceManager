@@ -20,7 +20,8 @@ export const UserDashboard: React.FC = () => {
                 }
                 setUser(user);
             }catch(e){
-                alert(e);
+                alert("Logging out");
+                auth.logout();
             }
         }
         
