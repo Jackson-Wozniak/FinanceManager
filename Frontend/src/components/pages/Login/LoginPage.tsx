@@ -1,21 +1,26 @@
 import { useState } from "react";
 import { useAuth } from "../../../providers/AuthProvider";
 import { fetchLoginUser, fetchRegisterUser } from "../../../api/UserAuthClient";
-import { Box, Button, Checkbox, Input, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import Page from "../../layout/Page";
 import { useTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
+    const navigate = useNavigate();
     const theme = useTheme();
     const auth = useAuth();
     const [isLogin, setIsLogin] = useState<boolean>(true);
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         try{
-            const token = await fetchLoginUser(username, password);
+            const token = isLogin ? await fetchLoginUser(username, password)
+                : await fetchRegisterUser(username, password);
             auth.login(token);
+            navigate("/dashboard");
         }catch(e){
             alert(e);
         }
