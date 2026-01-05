@@ -5,6 +5,8 @@ using Server.API.Contracts;
 using Server.Application.Accounts.Entities;
 using Server.Application.Accounts.Enums;
 using Server.Application.Accounts.Repositories;
+using Server.Application.Users.Dtos;
+using Server.Application.Users.Security;
 using Server.Application.Users.Services;
 
 namespace Server.API.Controllers;
@@ -12,26 +14,21 @@ namespace Server.API.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 [Authorize]
-public class AccountController(
-    UserAuthService userAuthService, AccountRepository repository,
-    UserService userService) : ControllerBase
+public class AccountController(UserAuthService userAuthService, UserService userService) : ControllerBase
 {
-    // [HttpPost("bank")]
-    // public async Task<IActionResult> AddBankAccountAsync([FromBody] BankAccountCreationRequest request)
-    // {
-    //     var userId = await userAuthService.GetAuthenticatedUserAsync();
-    //     var user = await userService.GetUserById(userId.UserId);
-    //     
-    //     var account = new BankAccount
-    //     {
-    //         Name = "Temp",
-    //         InstitutionName = "Temp Institution",
-    //         AccountType = AccountType.Checking,
-    //         User = user,
-    //         Balance = new decimal(0.0),
-    //         InterestRate = new decimal(0.0)
-    //     };
-    //     await repository.SaveAsync(account);
-    //     return Ok();
-    // }
+    [HttpPost("bank")]
+    public async Task<IActionResult> AddBankAccountAsync([FromBody] BankAccountCreationRequest request)
+    {
+        UserContext userContext = await userAuthService.GetAuthenticatedUserAsync();
+        var user = await userService.AddBankAccountAsync(userContext.UserId, request);
+        return Ok(new UserDto(user));
+    }
+    
+    [HttpPost("credit")]
+    public async Task<IActionResult> AddCreditAccountAsync([FromBody] CreditAccountCreationRequest request)
+    {
+        UserContext userContext = await userAuthService.GetAuthenticatedUserAsync();
+        var user = await userService.AddCreditAccountAsync(userContext.UserId, request);
+        return Ok(new UserDto(user));
+    }
 }

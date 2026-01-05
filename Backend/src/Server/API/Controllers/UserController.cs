@@ -15,7 +15,7 @@ public class UserController(UserService userService, UserAuthService userAuthSer
     public async Task<IActionResult> GetUserAsync()
     {
         var userContext = await userAuthService.GetAuthenticatedUserAsync();
-        var user = await userService.GetUserById(userContext.UserId);
+        var user = await userService.GetUserByIdAsync(userContext.UserId);
         return Ok(new UserDto(user));
     }
 }
