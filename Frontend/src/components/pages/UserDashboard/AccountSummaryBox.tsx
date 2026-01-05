@@ -1,11 +1,18 @@
 import Box from "@mui/material/Box";
 import type { BankAccount, CreditAccount } from "../../../types/Account/AccountTypes";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import type { User } from "../../../types/User/UserTypes";
+import { useState } from "react";
+import NewAccountPopup from "../../shared/account/NewAccountPopup";
 
 const AccountSummaryBox: React.FC<{
     bankAccounts: BankAccount[],
-    creditAccounts: CreditAccount[]
-}> = ({bankAccounts, creditAccounts}) => {
+    creditAccounts: CreditAccount[],
+    setUser: (user: User) => void
+}> = ({bankAccounts, creditAccounts, setUser}) => {
+    const [showAddAccountDialog, setShowAddAccountDialog] = useState<boolean>(false);
+
     const renderRows = (accounts: { name: string; balance: number }[]) =>
         accounts.map((acc, index) => (
             <Box
@@ -21,22 +28,25 @@ const AccountSummaryBox: React.FC<{
             </Box>
     ));
 
-  return (
-    <Box display="flex" gap={4}>
-      <Box flex={1} border="1px solid #ccc" borderRadius={2} p={2}>
-        <Typography variant="h6" mb={1}>
-          Bank Accounts
-        </Typography>
-        <hr/>
-        {renderRows(bankAccounts)}
-        <Typography variant="h6" mb={1}>
-          Credit Accounts
-        </Typography>
-        <hr/>
-        {renderRows(creditAccounts)}
-      </Box>
-    </Box>
-  );
+    return (
+        <Box display="flex" gap={4} marginLeft="10px">
+            <Box flex={1} border="1px solid #ccc" borderRadius={2} p={2}>
+                <Button onClick={() => setShowAddAccountDialog(true)}>New Account</Button>
+                <Typography variant="h6" mb={1}>
+                Bank Accounts
+                </Typography>
+                <hr/>
+                {renderRows(bankAccounts)}
+                <Typography variant="h6" mb={1}>
+                Credit Accounts
+                </Typography>
+                <hr/>
+                {renderRows(creditAccounts)}
+            </Box>
+            <NewAccountPopup open={showAddAccountDialog} 
+                handleClose={() => setShowAddAccountDialog(false)} setUser={setUser}/>
+        </Box>
+    );
 }
 
 export default AccountSummaryBox;

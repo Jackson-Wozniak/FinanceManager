@@ -18,3 +18,13 @@ export interface NewBankAccountDto{
     balance: number,
     interestRate: number,
 }
+
+export function newBankAccountDto(name: string, institution: string, type: string, balance: number, interestRate: number): NewBankAccountDto{
+    return {
+        name: name,
+        institutionName: institution,
+        accountType: type,
+        balance: balance,
+        interestRate: interestRate
+    }
+}

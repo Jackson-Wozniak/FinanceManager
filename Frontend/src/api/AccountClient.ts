@@ -3,7 +3,7 @@ import type { UserDto } from "../types/User/UserDtoTypes";
 import { fromUserDto, type User } from "../types/User/UserTypes";
 
 export async function fetchCreateBankAccount(token: string, account: NewBankAccountDto): Promise<User>{
-    const response = await fetch("", {
+    const response = await fetch("https://localhost:7082/api/Account/bank", {
         method: "POST",
         body: JSON.stringify(account),
         headers: {

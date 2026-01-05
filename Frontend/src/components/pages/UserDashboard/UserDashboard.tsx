@@ -42,7 +42,7 @@ export const UserDashboard: React.FC = () => {
                 <DisplayBalanceCard title="Montly Interest Charges" balance={user.estimatedMonthlyInterestCharges}/>
             </SpacedRow>
             <Box display="flex" flexDirection="row" width="100%" height="85%">
-                <AccountSummaryBox bankAccounts={user.bankAccounts} creditAccounts={user.creditAccounts}/>
+                <AccountSummaryBox setUser={setUser} bankAccounts={user.bankAccounts} creditAccounts={user.creditAccounts}/>
             </Box>
         </Page>
     )
