@@ -10,7 +10,12 @@ export interface BankAccount{
 
 export interface CreditAccount{
     name: string,
-    balance: number
+    institutionName: string,
+    accountType: string,
+    balance: number,
+    interestRate: number,
+    termMonths: number,
+    principalBalance: number
 }
 
 export function fromBankAccountDto(account: BankAccountDto): BankAccount{
@@ -29,8 +34,13 @@ export function fromBankAccountDtos(accounts: BankAccountDto[]): BankAccount[]{
 
 export function fromCreditAccountDto(account: CreditAccountDto): CreditAccount{
     return {
-        name: "Placeholder",
-        balance: 0
+        name: account.name,
+        institutionName: account.institutionName,
+        accountType: account.accountType,
+        balance: account.balance,
+        interestRate: account.interestRate,
+        termMonths: account.termMonths,
+        principalBalance: account.principalBalance
     };
 }
 

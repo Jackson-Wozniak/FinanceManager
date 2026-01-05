@@ -15,7 +15,7 @@ public static class AccountTypeUtils
 {
     public static AccountType? TryParse(string name)
     {
-        return name.ToLower() switch
+        return name.ToLower().Replace(" ", "") switch
         {
             "savings" => AccountType.Savings,
             "checking" => AccountType.Checking,

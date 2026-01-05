@@ -7,7 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import { AccountType } from "../../../types/Account/AccountEnums";
+import { AccountType, isBankAccount } from "../../../types/Account/AccountEnums";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -15,8 +15,8 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { Input, InputAdornment } from "@mui/material";
 import { useAuth } from "../../../providers/AuthProvider";
-import { newBankAccountDto } from "../../../types/Account/AccountDtoTypes";
-import { fetchCreateBankAccount } from "../../../api/AccountClient";
+import { newBankAccountDto, newCreditAccountDto } from "../../../types/Account/AccountDtoTypes";
+import { fetchCreateBankAccount, fetchCreateCreditAccount } from "../../../api/AccountClient";
 
 const NewAccountPopup: React.FC<{
     setUser: (user: User) => void,
@@ -29,12 +29,14 @@ const NewAccountPopup: React.FC<{
     const [accountType, setAccountType] = useState<AccountType>(AccountType.Savings);
     const [balance, setBalance] = useState<number>(0.0);
     const [interestRate, setInterestRate] = useState<number>(0.0);
+    const [termMonths, setTermMonths] = useState<number>(0);
+    const [principalBalance, setPrincipalBalance] = useState<number>(0);
 
     const handleSubmit = async () => {
         try{
             if(auth.token == null) return;
-            const dto = newBankAccountDto(name, institutionName, accountType, balance, interestRate);
-            const user = await fetchCreateBankAccount(auth.token, dto);
+            const user = isBankAccount(accountType) ? await fetchCreateBankAccount(auth.token, newBankAccountDto(name, institutionName, accountType, balance, interestRate))
+                : await fetchCreateCreditAccount(auth.token, newCreditAccountDto(name, institutionName, accountType, balance, interestRate, termMonths, principalBalance));
             if(user == null){
                 throw new Error("Error after getting user from server");
             }
@@ -80,6 +82,15 @@ const NewAccountPopup: React.FC<{
                         }
                     }}
                     value={interestRate} label="Interest Rate" variant="outlined" sx={{width: "60%", m: "10px"}}/>
+            
+                    {!isBankAccount(accountType) && 
+                    (<>
+                        <TextField onChange={(e) => setTermMonths(Number(e.target.value))} type="number"
+                            value={termMonths} label="Term (Months)" variant="outlined" sx={{width: "60%", m: "10px"}}/>
+
+                        <TextField onChange={(e) => setPrincipalBalance(Number(e.target.value))} type="number"
+                            value={principalBalance} label="Principal Balance" variant="outlined" sx={{width: "60%", m: "10px"}}/>
+                    </>)}
             </DialogContent>
 
             <DialogActions>
