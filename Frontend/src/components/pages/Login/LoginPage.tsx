@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../providers/AuthProvider";
 import { fetchLoginUser, fetchRegisterUser } from "../../../api/UserAuthClient";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, TextField, Typography } from "@mui/material";
 import Page from "../../layout/Page";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
+    const [loading, setLoading] = useState<boolean>(false);
     const navigate = useNavigate();
     const theme = useTheme();
     const auth = useAuth();
@@ -19,6 +20,7 @@ const LoginPage: React.FC = () => {
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
+        setLoading(true);
         e.preventDefault();
         try{
             const userToken = isLogin ? await fetchLoginUser(username, password)
@@ -26,8 +28,17 @@ const LoginPage: React.FC = () => {
             auth.login(userToken.token);
             navigate("/dashboard");
         }catch(e){
+            setLoading(false);
             alert(e);
         }
+    }
+
+    if(loading){
+        return (
+            <Page alignment="center">
+                <CircularProgress/>
+            </Page>
+        )
     }
 
     return (

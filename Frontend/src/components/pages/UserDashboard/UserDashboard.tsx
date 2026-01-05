@@ -7,7 +7,7 @@ import type { User } from "../../../types/User/UserTypes";
 import type { BankAccount } from "../../../types/Account/AccountTypes";
 import AccountSummaryBox from "./AccountSummaryBox";
 import DisplayBalanceCard from "../../shared/cards/DisplayBalanceCard";
-import SpaceEvenlyRow from "../../shared/styled/SpaceEvenlyRow";
+import SpacedRow from "../../shared/styled/SpacedRow";
 
 export const UserDashboard: React.FC = () => {
     const auth = useAuth();
@@ -37,11 +37,13 @@ export const UserDashboard: React.FC = () => {
 
     return (
         <Page>
-            <SpaceEvenlyRow>
+            <SpacedRow sx={{width: "100%", height: "15%"}}>
                 <DisplayBalanceCard title="Net Worth" balance={user.netWorth}/>
                 <DisplayBalanceCard title="Montly Interest Charges" balance={user.estimatedMonthlyInterestCharges}/>
-            </SpaceEvenlyRow>
-            <AccountSummaryBox bankAccounts={user.bankAccounts} creditAccounts={user.creditAccounts}/>
+            </SpacedRow>
+            <Box display="flex" flexDirection="row" width="100%" height="85%">
+                <AccountSummaryBox bankAccounts={user.bankAccounts} creditAccounts={user.creditAccounts}/>
+            </Box>
         </Page>
     )
 }
