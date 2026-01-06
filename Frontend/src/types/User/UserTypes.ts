@@ -1,4 +1,4 @@
-import { fromBankAccountDtos, fromCreditAccountDtos, type BankAccount, type CreditAccount } from "../Account/AccountTypes"
+import { fromBankAccountDtos, fromLoanAccountDtos, fromRevolvingCreditAccountDtos, type BankAccount, type LoanAccount, type RevolvingCreditAccount } from "../Account/AccountTypes"
 import type { UserDto, UserTokenDto } from "./UserDtoTypes"
 
 export interface UserToken{
@@ -10,7 +10,8 @@ export interface User{
     netWorth: number,
     estimatedMonthlyInterestCharges: number,
     bankAccounts: BankAccount[],
-    creditAccounts: CreditAccount[]
+    revolvingCreditAccounts: RevolvingCreditAccount[],
+    loanAccounts: LoanAccount[]
 }
 
 export function fromUserTokenDto(userTokenDto: UserTokenDto): UserToken{
@@ -25,6 +26,7 @@ export function fromUserDto(user: UserDto): User{
         netWorth: user.netWorth,
         estimatedMonthlyInterestCharges: user.estimatedMonthlyInterestCharges,
         bankAccounts: fromBankAccountDtos(user.bankAccounts),
-        creditAccounts: fromCreditAccountDtos(user.creditAccounts),
+        revolvingCreditAccounts: fromRevolvingCreditAccountDtos(user.revolvingCreditAccounts),
+        loanAccounts: fromLoanAccountDtos(user.loanAccounts)
     }
 }

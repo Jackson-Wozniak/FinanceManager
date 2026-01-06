@@ -1,20 +1,29 @@
 
-export interface BankAccountDto{
+interface AccountDto{
     name: string,
-    institutionName: string,
-    accountType: string,
+    accountType: string
+}
+
+export interface BankAccountDto extends AccountDto{
+    bankName: string,
     balance: number,
     interestRate: number,
 }
 
-export interface CreditAccountDto{
-    name: string,
-    institutionName: string,
-    accountType: string,
+export interface RevolvingCreditAccountDto extends AccountDto{
     balance: number,
+    issuer: string,
     interestRate: number,
-    termMonths: number,
-    principalBalance: number
+    creditLimit: number
+}
+
+export interface LoanAccountDto extends AccountDto{
+    balance: number,
+    principalBalance: number,
+    issuer: string,
+    interestRate: number,
+    isCompoundInterest: boolean,
+    termMonths: number
 }
 
 export interface NewBankAccountDto{
@@ -33,26 +42,4 @@ export interface NewCreditAccountDto{
     interestRate: number,
     termMonths: number,
     principalBalance: number
-}
-
-export function newBankAccountDto(name: string, institution: string, type: string, balance: number, interestRate: number): NewBankAccountDto{
-    return {
-        name: name,
-        institutionName: institution,
-        accountType: type,
-        balance: balance,
-        interestRate: interestRate
-    }
-}
-
-export function newCreditAccountDto(name: string, institution: string, type: string, balance: number, interestRate: number, termMonths: number, principalBalance: number): NewCreditAccountDto{
-    return {
-        name: name,
-        institutionName: institution,
-        accountType: type,
-        balance: balance,
-        interestRate: interestRate,
-        termMonths: termMonths,
-        principalBalance: principalBalance
-    }
 }

@@ -15,8 +15,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { Input, InputAdornment } from "@mui/material";
 import { useAuth } from "../../../providers/AuthProvider";
-import { newBankAccountDto, newCreditAccountDto } from "../../../types/Account/AccountDtoTypes";
-import { fetchCreateBankAccount, fetchCreateCreditAccount } from "../../../api/AccountClient";
+import { fetchCreateBankAccount, fetchCreateRevolvingCreditAccount, fetchCreateLoanAccount } from "../../../api/AccountClient";
 
 const NewAccountPopup: React.FC<{
     setUser: (user: User) => void,
@@ -35,12 +34,12 @@ const NewAccountPopup: React.FC<{
     const handleSubmit = async () => {
         try{
             if(auth.token == null) return;
-            const user = isBankAccount(accountType) ? await fetchCreateBankAccount(auth.token, newBankAccountDto(name, institutionName, accountType, balance, interestRate))
-                : await fetchCreateCreditAccount(auth.token, newCreditAccountDto(name, institutionName, accountType, balance, interestRate, termMonths, principalBalance));
-            if(user == null){
-                throw new Error("Error after getting user from server");
-            }
-            setUser(user);
+            // const user = isBankAccount(accountType) ? await fetchCreateBankAccount(auth.token, newBankAccountDto(name, institutionName, accountType, balance, interestRate))
+            //     : await fetchCreateCreditAccount(auth.token, newCreditAccountDto(name, institutionName, accountType, balance, interestRate, termMonths, principalBalance));
+            // if(user == null){
+            //     throw new Error("Error after getting user from server");
+            // }
+            // setUser(user);
             handleClose();
         }catch(e){
             alert(e);

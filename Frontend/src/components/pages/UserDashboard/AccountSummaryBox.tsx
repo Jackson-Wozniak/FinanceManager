@@ -1,5 +1,5 @@
 import Box from "@mui/material/Box";
-import type { BankAccount, CreditAccount } from "../../../types/Account/AccountTypes";
+import type { BankAccount, LoanAccount, RevolvingCreditAccount } from "../../../types/Account/AccountTypes";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import type { User } from "../../../types/User/UserTypes";
@@ -8,9 +8,10 @@ import NewAccountPopup from "../../shared/account/NewAccountPopup";
 
 const AccountSummaryBox: React.FC<{
     bankAccounts: BankAccount[],
-    creditAccounts: CreditAccount[],
+    revolvingCreditAccounts: RevolvingCreditAccount[],
+    loanAccounts: LoanAccount[],
     setUser: (user: User) => void
-}> = ({bankAccounts, creditAccounts, setUser}) => {
+}> = ({bankAccounts, revolvingCreditAccounts, loanAccounts, setUser}) => {
     const [showAddAccountDialog, setShowAddAccountDialog] = useState<boolean>(false);
 
     const renderRows = (accounts: { name: string; balance: number }[]) =>
@@ -41,7 +42,12 @@ const AccountSummaryBox: React.FC<{
                 Credit Accounts
                 </Typography>
                 <hr/>
-                {renderRows(creditAccounts)}
+                {renderRows(revolvingCreditAccounts)}
+                <Typography variant="h6" mb={1}>
+                Loan Accounts
+                </Typography>
+                <hr/>
+                {renderRows(loanAccounts)}
             </Box>
             <NewAccountPopup open={showAddAccountDialog} 
                 handleClose={() => setShowAddAccountDialog(false)} setUser={setUser}/>

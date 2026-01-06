@@ -1,27 +1,36 @@
-import type { BankAccountDto, CreditAccountDto } from "./AccountDtoTypes";
+import type { BankAccountDto, LoanAccountDto, RevolvingCreditAccountDto } from "./AccountDtoTypes";
 
-export interface BankAccount{
+export interface Account{
     name: string,
-    institutionName: string,
     accountType: string,
+}
+
+export interface BankAccount extends Account{
+    bankName: string,
     balance: number,
     interestRate: number,
 }
 
-export interface CreditAccount{
-    name: string,
-    institutionName: string,
-    accountType: string,
+export interface RevolvingCreditAccount extends Account{
     balance: number,
+    issuer: string,
+    interestRate: number,
+    creditLimit: number
+}
+
+export interface LoanAccount extends Account{
+    balance: number,
+    issuer: string,
+    principalBalance: number,
     interestRate: number,
     termMonths: number,
-    principalBalance: number
+    isCompoundInterest: boolean
 }
 
 export function fromBankAccountDto(account: BankAccountDto): BankAccount{
     return {
         name: account.name,
-        institutionName: account.institutionName,
+        bankName: account.bankName,
         accountType: account.accountType,
         balance: account.balance,
         interestRate: account.interestRate
@@ -32,18 +41,34 @@ export function fromBankAccountDtos(accounts: BankAccountDto[]): BankAccount[]{
     return accounts.map(a => fromBankAccountDto(a));
 }
 
-export function fromCreditAccountDto(account: CreditAccountDto): CreditAccount{
+export function fromRevolvingCreditAccountDto(account: RevolvingCreditAccountDto): RevolvingCreditAccount{
     return {
         name: account.name,
-        institutionName: account.institutionName,
+        accountType: account.accountType,
+        balance: account.balance,
+        interestRate: account.interestRate,
+        issuer: account.issuer,
+        creditLimit: account.creditLimit
+    };
+}
+
+export function fromRevolvingCreditAccountDtos(accounts: RevolvingCreditAccountDto[]): RevolvingCreditAccount[]{
+    return accounts.map(a => fromRevolvingCreditAccountDto(a));
+}
+
+export function fromLoanAccountDto(account: LoanAccountDto): LoanAccount{
+    return {
+        name: account.name,
+        issuer: account.issuer,
         accountType: account.accountType,
         balance: account.balance,
         interestRate: account.interestRate,
         termMonths: account.termMonths,
-        principalBalance: account.principalBalance
+        principalBalance: account.principalBalance,
+        isCompoundInterest: account.isCompoundInterest
     };
 }
 
-export function fromCreditAccountDtos(accounts: CreditAccountDto[]): CreditAccount[]{
-    return accounts.map(a => fromCreditAccountDto(a));
+export function fromLoanAccountDtos(accounts: LoanAccountDto[]): LoanAccount[]{
+    return accounts.map(a => fromLoanAccountDto(a));
 }
