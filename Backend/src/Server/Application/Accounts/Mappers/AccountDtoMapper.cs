@@ -5,17 +5,32 @@ namespace Server.Application.Accounts.Mappers;
 
 public static class AccountDtoMapper
 {
-    public static AccountDto MapToDto(this Account account)
+    public static BankAccountDto MapToDto(this BankAccount account)
     {
-        return account switch
-        {
-            BankAccount b => new BankAccountDto(b),
-            RevolvingCreditAccount c => new RevolvingCreditAccountDto(c),
-            _ => new AccountDto(account)
-        };
+        return new BankAccountDto(account);
+    }
+    
+    public static RevolvingCreditAccountDto MapToDto(this RevolvingCreditAccount account)
+    {
+        return new RevolvingCreditAccountDto(account);
+    }
+    
+    public static LoanAccountDto MapToDto(this LoanAccount account)
+    {
+        return new LoanAccountDto(account);
     }
 
-    public static List<AccountDto> MapToDto(this IEnumerable<Account> accounts)
+    public static List<BankAccountDto> MapToDto(this IEnumerable<BankAccount> accounts)
+    {
+        return accounts.Select(MapToDto).ToList();
+    }
+    
+    public static List<RevolvingCreditAccountDto> MapToDto(this IEnumerable<RevolvingCreditAccount> accounts)
+    {
+        return accounts.Select(MapToDto).ToList();
+    }
+    
+    public static List<LoanAccountDto> MapToDto(this IEnumerable<LoanAccount> accounts)
     {
         return accounts.Select(MapToDto).ToList();
     }

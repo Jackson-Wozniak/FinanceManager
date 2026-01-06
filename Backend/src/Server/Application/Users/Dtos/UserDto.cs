@@ -11,14 +11,18 @@ public class UserDto
     public string Username { get; set; }
     public decimal NetWorth { get; set; }
     public decimal EstimatedMonthlyLoanPayments { get; set; }
-    public List<AccountDto> Accounts { get; set; } = [];
+    public List<BankAccountDto> BankAccounts { get; set; } = [];
+    public List<RevolvingCreditAccountDto> RevolvingCreditAccounts { get; set; } = [];
+    public List<LoanAccountDto> LoanAccounts { get; set; } = [];
     
     protected UserDto() { }
 
     public UserDto(User user)
     {
         Username = user.Username;
-        Accounts = user.Accounts.MapToDto();
+        BankAccounts = user.Accounts.OfType<BankAccount>().ToList().MapToDto();
+        RevolvingCreditAccounts = user.Accounts.OfType<RevolvingCreditAccount>().ToList().MapToDto();
+        LoanAccounts = user.Accounts.OfType<LoanAccount>().ToList().MapToDto();
         NetWorth = AccountCalculations.CalculateNetWorth(user.Accounts);
         EstimatedMonthlyLoanPayments = AccountCalculations.CalculateMonthlyLoanPayments(user.Accounts.OfType<LoanAccount>().ToList());
     }
