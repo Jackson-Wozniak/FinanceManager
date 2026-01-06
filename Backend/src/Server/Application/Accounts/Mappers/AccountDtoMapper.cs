@@ -10,7 +10,7 @@ public static class AccountDtoMapper
         return account switch
         {
             BankAccount b => new BankAccountDto(b),
-            CreditAccount c => new CreditAccountDto(c),
+            RevolvingCreditAccount c => new RevolvingCreditAccountDto(c),
             _ => new AccountDto(account)
         };
     }

@@ -4,17 +4,16 @@ namespace Server.Application.Accounts.Utils;
 
 public static class AccountCalculations
 {
-    public static decimal CalculateNetWorth(List<BankAccount> bankAccounts, List<CreditAccount> creditAccounts)
+    public static decimal CalculateNetWorth(List<Account> accounts)
     {
-        var bankBalance = bankAccounts.Sum(b => b.Balance);
-        var creditBalance = creditAccounts.Sum(c => c.Balance);
-        return Math.Round(bankBalance - creditBalance, 2);
+        var sum = accounts.Sum(b => b.IsAsset ? b.Value : -b.Value);
+        return Math.Round(sum, 2);
     }
 
-    public static decimal CalculateMonthlyInterestCharges(List<CreditAccount> accounts)
+    public static decimal CalculateMonthlyLoanPayments(List<LoanAccount> accounts)
     {
-        //TODO: add and handle simple vs compound interest
-        var sum = accounts.Sum(a => (a.Balance * a.InterestRate) / 12);
+        var sum = accounts.Sum(a => 
+            (a.IsCompoundInterest ? a.Balance : a.PrincipalBalance * a.InterestRate) / 12);
         return Math.Round(sum, 2);
     }
 }

@@ -17,22 +17,4 @@ public class UserService(UserRepository userRepository)
 
         return user;
     }
-
-    public async Task<User> AddBankAccountAsync(long userId, BankAccountCreationRequest request)
-    {
-        var user = await GetUserByIdAsync(userId);
-        var account = new BankAccount(user, request);
-        user.Accounts.Add(account);
-        await userRepository.SaveChangesAsync();
-        return user;
-    }
-    
-    public async Task<User> AddCreditAccountAsync(long userId, CreditAccountCreationRequest request)
-    {
-        var user = await GetUserByIdAsync(userId);
-        var account = new CreditAccount(user, request);
-        user.Accounts.Add(account);
-        await userRepository.SaveChangesAsync();
-        return user;
-    }
 }

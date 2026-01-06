@@ -1,4 +1,5 @@
-﻿using Server.Application.Accounts.Enums;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Server.Application.Accounts.Enums;
 using Server.Application.Users.Entities;
 using Server.Core.Entities;
 
@@ -7,21 +8,20 @@ namespace Server.Application.Accounts.Entities;
 public abstract class Account : BaseEntity
 {
     public string Name { get; set; }
-    public string InstitutionName { get; set; }
     public AccountType AccountType { get; set; }
     public long UserId { get; set; }
     public User User { get; set; }
-    public decimal Balance { get; set; }
+    [NotMapped]
+    public abstract decimal Value { get; }
+    [NotMapped]
+    public abstract bool IsAsset { get; }
     
     protected Account() { }
 
-    protected Account(string name, string institution, 
-        AccountType type, User user, decimal balance)
+    protected Account(string name, AccountType type, User user)
     {
         Name = name;
-        InstitutionName = institution;
         AccountType = type;
         User = user;
-        Balance = balance;
     }
 }

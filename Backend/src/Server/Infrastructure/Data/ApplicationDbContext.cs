@@ -35,7 +35,10 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<BankAccount>()
             .ToTable("bank_accounts");
 
-        modelBuilder.Entity<CreditAccount>()
+        modelBuilder.Entity<RevolvingCreditAccount>()
             .ToTable("credit_accounts");
+        
+        modelBuilder.Entity<LoanAccount>()
+            .ToTable("loan_accounts");
     }
 }

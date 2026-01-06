@@ -26,9 +26,18 @@ public static class AccountTypeUtils
         };
     }
 
-    //if false, its a checking account
     public static bool IsBankAccount(this AccountType? type)
     {
         return type is AccountType.Savings or AccountType.Checking;
+    }
+
+    public static bool IsRevolvingCreditAccount(this AccountType? type)
+    {
+        return type is AccountType.CreditCard;
+    }
+
+    public static bool IsLoanAccount(this AccountType? type)
+    {
+        return type is AccountType.StudentLoan or AccountType.CarLoan;
     }
 }
