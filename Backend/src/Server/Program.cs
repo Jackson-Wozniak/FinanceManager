@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Server.API.Filters;
 using Server.Application.Accounts.Repositories;
+using Server.Application.Accounts.Services;
 using Server.Application.Users.Repositories;
 using Server.Application.Users.Services;
 using Server.Infrastructure.Data;
@@ -23,6 +24,7 @@ builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<UserAuthService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AccountRepository>();
+builder.Services.AddScoped<AccountService>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

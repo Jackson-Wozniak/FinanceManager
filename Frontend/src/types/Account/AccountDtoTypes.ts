@@ -1,5 +1,5 @@
 
-interface AccountDto{
+export interface AccountDto{
     name: string,
     accountType: string
 }

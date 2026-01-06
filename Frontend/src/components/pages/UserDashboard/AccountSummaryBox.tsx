@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import type { User } from "../../../types/User/UserTypes";
 import { useState } from "react";
-import NewAccountPopup from "../../shared/account/NewAccountPopup";
+import CreateAccountPopup from "../../shared/account/CreateAccountPopup";
 
 const AccountSummaryBox: React.FC<{
     bankAccounts: BankAccount[],
@@ -49,7 +49,7 @@ const AccountSummaryBox: React.FC<{
                 <hr/>
                 {renderRows(loanAccounts)}
             </Box>
-            <NewAccountPopup open={showAddAccountDialog} 
+            <CreateAccountPopup open={showAddAccountDialog} 
                 handleClose={() => setShowAddAccountDialog(false)} setUser={setUser}/>
         </Box>
     );
