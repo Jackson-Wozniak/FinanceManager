@@ -17,6 +17,7 @@ import { fetchCreateBankAccount, fetchCreateRevolvingCreditAccount, fetchCreateL
 import { CreateAccountReducer, initialCreateAccountForm, mapToBankAccountDto, mapToLoanAccountDto, mapToRevolvingCreditAccountDto } from "./CreateAccountDispatch";
 import BankAccountInputs from "./inputs/BankAccountInputs";
 import LoanAccountInputs from "./inputs/LoanAccountInputs";
+import CreditAccountInputs from "./inputs/CreditAccountInputs";
 
 const CreateAccountPopup: React.FC<{
     setUser: (user: User) => void,
@@ -86,13 +87,13 @@ const CreateAccountPopup: React.FC<{
 
                 {isBankAccount(formState.accountType) ? <BankAccountInputs formState={formState} dispatch={createAccountDispatch}/>
                     : isLoanAccount(formState.accountType) ? <LoanAccountInputs formState={formState} dispatch={createAccountDispatch}/> 
-                    : <></>}
+                    : <CreditAccountInputs formState={formState} dispatch={createAccountDispatch}/>}
                 
             </DialogContent>
 
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleSubmit}>Save</Button>
+                <Button onClick={handleSubmit} type="submit">Save</Button>
             </DialogActions>
         </Dialog>
     )

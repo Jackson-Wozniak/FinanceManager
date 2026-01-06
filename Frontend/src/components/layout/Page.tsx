@@ -10,7 +10,8 @@ const Page: React.FC<{
     sx?: SxProps<Theme>
 }> = ({alignment = "normal", children, sx}) => {
     return (
-        <Box width="100%" height="100%" margin={0} padding={0} display="flex" flexDirection="column">
+        <Box width="100%" maxWidth="100%" height="100%" margin={0} padding={0} display="flex" 
+            sx={{overflowX: "none", overflowY: "auto"}} flexDirection="column">
             <Header/>
             <ContentContainer>
                 <Box sx={{display: "flex", flexDirection: "column", width: "100%", height: "90%",
