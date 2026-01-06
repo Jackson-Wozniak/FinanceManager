@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import { useReducer } from "react";
-import { AccountType } from "../../../types/Account/AccountEnums";
+import { AccountType, isBankAccount, isLoanAccount } from "../../../types/Account/AccountEnums";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -16,6 +16,7 @@ import { useAuth } from "../../../providers/AuthProvider";
 import { fetchCreateBankAccount, fetchCreateRevolvingCreditAccount, fetchCreateLoanAccount } from "../../../api/AccountClient";
 import { CreateAccountReducer, initialCreateAccountForm, mapToBankAccountDto, mapToLoanAccountDto, mapToRevolvingCreditAccountDto } from "./CreateAccountDispatch";
 import BankAccountInputs from "./inputs/BankAccountInputs";
+import LoanAccountInputs from "./inputs/LoanAccountInputs";
 
 const CreateAccountPopup: React.FC<{
     setUser: (user: User) => void,
@@ -83,7 +84,10 @@ const CreateAccountPopup: React.FC<{
                     </Select>
                 </FormControl>
 
-                <BankAccountInputs formState={formState} dispatch={createAccountDispatch}/>
+                {isBankAccount(formState.accountType) ? <BankAccountInputs formState={formState} dispatch={createAccountDispatch}/>
+                    : isLoanAccount(formState.accountType) ? <LoanAccountInputs formState={formState} dispatch={createAccountDispatch}/> 
+                    : <></>}
+                
             </DialogContent>
 
             <DialogActions>

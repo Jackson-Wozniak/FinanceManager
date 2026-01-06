@@ -10,3 +10,11 @@ export enum AccountType{
 export function isBankAccount(type: AccountType): boolean{
     return type === AccountType.Savings || type === AccountType.Checking;
 }
+
+export function isRevolvingCreditAccount(type: AccountType): boolean{
+    return type === AccountType.CreditCard;
+}
+
+export function isLoanAccount(type: AccountType): boolean{
+    return type === AccountType.StudentLoan || type === AccountType.CarLoan;
+}
