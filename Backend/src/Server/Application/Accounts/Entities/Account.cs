@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using Server.Application.Accounts.Enums;
+using Server.Application.Transactions.Entities;
 using Server.Application.Users.Entities;
 using Server.Core.Entities;
 
@@ -11,6 +12,7 @@ public abstract class Account : BaseEntity
     public AccountType AccountType { get; set; }
     public long UserId { get; set; }
     public User User { get; set; }
+    public List<Transaction> Transactions { get; set; }
     [NotMapped]
     public abstract decimal Value { get; }
     [NotMapped]

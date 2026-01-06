@@ -12,6 +12,8 @@ public class UserRepository(ApplicationDbContext context)
         {
             return await context.Users
                 .Include(u => u.Accounts)
+                .ThenInclude(a => a.Transactions)
+                .Include(u => u.Transactions)
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
         return await context.Users.FindAsync(id);
@@ -23,6 +25,8 @@ public class UserRepository(ApplicationDbContext context)
         {
             return await context.Users
                 .Include(u => u.Accounts)
+                .ThenInclude(a => a.Transactions)
+                .Include(u => u.Transactions)
                 .FirstOrDefaultAsync(u => u.Username.Equals(username));
         }
         return await context.Users

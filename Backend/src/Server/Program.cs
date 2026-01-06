@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Server.API.Filters;
 using Server.Application.Accounts.Repositories;
 using Server.Application.Accounts.Services;
+using Server.Application.Transactions.Repositories;
+using Server.Application.Transactions.Services;
 using Server.Application.Users.Repositories;
 using Server.Application.Users.Services;
 using Server.Infrastructure.Data;
@@ -25,6 +27,8 @@ builder.Services.AddScoped<UserAuthService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<TransactionRepository>();
+builder.Services.AddScoped<TransactionService>();
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

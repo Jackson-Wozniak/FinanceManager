@@ -24,7 +24,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\Transactions\" />
       <Folder Include="Application\Users\Enums\" />
     </ItemGroup>
 

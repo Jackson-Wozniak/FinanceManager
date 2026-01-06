@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Server.Application.Accounts.Entities;
+using Server.Application.Transactions.Entities;
 using Server.Application.Users.Entities;
 using Server.Core.Entities;
 
@@ -9,6 +10,7 @@ public class ApplicationDbContext : DbContext
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Account> Accounts { get; set; }
+    public DbSet<Transaction> Transactions { get; set; }
     
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
         : base(options) { }
@@ -31,6 +33,21 @@ public class ApplicationDbContext : DbContext
             .WithMany(u => u.Accounts)
             .HasForeignKey(a => a.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Transaction>()
+            .ToTable("transactions");
+            
+        modelBuilder.Entity<Transaction>()    
+            .HasOne(a => a.User)
+            .WithMany(u => u.Transactions)
+            .HasForeignKey(a => a.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        modelBuilder.Entity<Transaction>()    
+            .HasOne(a => a.Account)
+            .WithMany(u => u.Transactions)
+            .HasForeignKey(a => a.AccountId)
+            .OnDelete(DeleteBehavior.SetNull);
 
         modelBuilder.Entity<BankAccount>()
             .ToTable("bank_accounts");
