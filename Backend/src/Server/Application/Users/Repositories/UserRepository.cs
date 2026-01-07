@@ -11,6 +11,7 @@ public class UserRepository(ApplicationDbContext context)
         if (eagerLoad)
         {
             return await context.Users
+                .AsSplitQuery()
                 .Include(u => u.Accounts)
                 .ThenInclude(a => a.Transactions)
                 .Include(u => u.Transactions)
@@ -24,6 +25,7 @@ public class UserRepository(ApplicationDbContext context)
         if (eagerLoad)
         {
             return await context.Users
+                .AsSplitQuery()
                 .Include(u => u.Accounts)
                 .ThenInclude(a => a.Transactions)
                 .Include(u => u.Transactions)

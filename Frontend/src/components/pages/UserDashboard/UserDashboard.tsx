@@ -4,10 +4,8 @@ import Page from "../../layout/Page";
 import { fetchGetUser } from "../../../api/UserClient";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import type { User } from "../../../types/User/UserTypes";
-import type { BankAccount } from "../../../types/Account/AccountTypes";
-import AccountSummaryBox from "./AccountSummaryBox";
-import DisplayBalanceCard from "../../shared/cards/DisplayBalanceCard";
-import SpacedRow from "../../shared/styled/SpacedRow";
+import NetWorthCard from "./cards/NetWorthCard";
+import AccountSummaryCard from "./cards/AccountSummaryCard";
 
 export const UserDashboard: React.FC = () => {
     const auth = useAuth();
@@ -36,13 +34,12 @@ export const UserDashboard: React.FC = () => {
     }
 
     return (
-        <Page>
-            <SpacedRow sx={{width: "100%", height: "15%"}}>
-                <DisplayBalanceCard title="Net Worth" balance={user.netWorth}/>
-                <DisplayBalanceCard title="Montly Interest Charges" balance={user.estimatedMonthlyInterestCharges}/>
-            </SpacedRow>
-            <Box display="flex" flexDirection="row" width="100%" height="85%">
-                <AccountSummaryBox setUser={setUser} bankAccounts={user.bankAccounts} 
+        <Page sx={{flexDirection: "row"}}>
+            <Box height="100%" display="flex" flexDirection="row" width="65%" marginTop="15px" padding="10px">
+                <NetWorthCard balance={user.netWorth} sx={{width: "25%", height: "80px"}}/>
+            </Box>
+            <Box height="100%" display="flex" flexDirection="row" width="35%" marginTop="15px"padding="10px">
+                <AccountSummaryCard setUser={setUser} bankAccounts={user.bankAccounts} 
                     loanAccounts={user.loanAccounts} revolvingCreditAccounts={user.revolvingCreditAccounts}/>
             </Box>
         </Page>

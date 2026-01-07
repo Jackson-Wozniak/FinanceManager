@@ -11,7 +11,8 @@ const Page: React.FC<{
 }> = ({alignment = "normal", children, sx}) => {
     return (
         <Box width="100%" maxWidth="100%" height="100%" margin={0} padding={0} display="flex" 
-            sx={{overflowX: "none", overflowY: "auto"}} flexDirection="column">
+            sx={{overflowX: "none", overflowY: "auto", scrollbarWidth: "thin",
+    scrollbarColor: "rgba(255, 255, 255, 0.2) transparent"}} flexDirection="column">
             <Header/>
             <ContentContainer>
                 <Box sx={{display: "flex", flexDirection: "column", width: "100%", height: "90%",
