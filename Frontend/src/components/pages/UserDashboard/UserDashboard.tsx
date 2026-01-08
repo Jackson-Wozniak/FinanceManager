@@ -6,6 +6,7 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import type { User } from "../../../types/User/UserTypes";
 import NetWorthCard from "./cards/NetWorthCard";
 import AccountSummaryCard from "./cards/AccountSummaryCard";
+import MonthSelector from "./MonthSelector";
 
 export const UserDashboard: React.FC = () => {
     const auth = useAuth();
@@ -35,8 +36,21 @@ export const UserDashboard: React.FC = () => {
 
     return (
         <Page sx={{flexDirection: "row"}}>
-            <Box height="100%" display="flex" flexDirection="row" width="65%" marginTop="15px" padding="10px">
-                <NetWorthCard balance={user.netWorth} sx={{width: "25%", height: "80px"}}/>
+            <Box height="100%" display="flex" flexDirection="row" width="10%" marginTop="2px" padding="10px">
+                <MonthSelector/>
+            </Box>
+            <Box height="100%" width="55%" marginTop="15px" 
+                padding="10px" sx={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 1fr)",
+                    gap: 2,
+                }}>
+                <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 2", height: 120}}/>
+                <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 1", height: 120}}/>
+                <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 2", height: 120}}/>
+                <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 1", height: 120}}/>
+                <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 2", height: 120}}/>
+                <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 1", height: 120}}/>
             </Box>
             <Box height="100%" display="flex" flexDirection="row" width="35%" marginTop="15px"padding="10px">
                 <AccountSummaryCard setUser={setUser} bankAccounts={user.bankAccounts} 

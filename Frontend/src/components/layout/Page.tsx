@@ -15,7 +15,7 @@ const Page: React.FC<{
     scrollbarColor: "rgba(255, 255, 255, 0.2) transparent"}} flexDirection="column">
             <Header/>
             <ContentContainer>
-                <Box sx={{display: "flex", flexDirection: "column", width: "100%", height: "90%",
+                <Box sx={{display: "flex", flexDirection: "column", width: "100%", height: "95%",
                     alignItems: alignment, justifyContent: alignment, ...sx
                 }}>{children}</Box>
             </ContentContainer>
