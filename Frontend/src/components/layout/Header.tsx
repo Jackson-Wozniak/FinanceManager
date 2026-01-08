@@ -18,7 +18,7 @@ const Header: React.FC<{}> = () => {
     const auth = useAuth();
     
     return (
-        <Box width="100%" height="10%" sx={{backgroundColor: theme.palette.background.secondary}}
+        <Box width="100%" height="6%" sx={{backgroundColor: theme.palette.background.secondary}}
             display="flex" justifyContent="space-between" alignItems="center" margin={0}>
             <Stack height="100%" direction="row" display="flex" justifyContent="space-evenly" gap={0}>
                 <HeaderLink text="Home" link="/dashboard"/>

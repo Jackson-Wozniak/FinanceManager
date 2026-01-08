@@ -34,9 +34,10 @@ const AccountSummaryCard: React.FC<{
     return (
         <Box width="100%" maxHeight="100%" sx={{
             backgroundColor: theme.palette.background.secondary}} display="flex" gap={4} 
-            borderRadius="5px" marginLeft="10px">
-            <Box flex={1} p={2} sx={{overflowY: "auto", paddingBottom: "10px"}}>
-                <Button onClick={() => setShowAddAccountDialog(true)}>New Account</Button>
+            borderRadius="5px" marginLeft="10px" position="relative">
+            <Box flex={1} p={2} sx={{overflowY: "auto", paddingBottom: "10px", position: "relative"}}>
+                <Button size="small" sx={{position: "absolute", top: 0, right: 0}} 
+                    onClick={() => setShowAddAccountDialog(true)}>Edit Accounts</Button>
                 <Typography variant="h6" mb={1}>
                 Bank Accounts
                 </Typography>
