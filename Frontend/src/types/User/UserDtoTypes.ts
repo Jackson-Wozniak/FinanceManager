@@ -1,4 +1,5 @@
 import type { BankAccountDto, LoanAccountDto, RevolvingCreditAccountDto } from "../Account/AccountDtoTypes"
+import type { TransactionDto } from "../Transaction/TransactionDtoTypes"
 
 export interface UserTokenDto{
     token: string
@@ -10,5 +11,6 @@ export interface UserDto{
     estimatedMonthlyInterestCharges: number,
     bankAccounts: BankAccountDto[],
     revolvingCreditAccounts: RevolvingCreditAccountDto[],
-    loanAccounts: LoanAccountDto[]
+    loanAccounts: LoanAccountDto[],
+    transactions: TransactionDto[]
 }

@@ -7,6 +7,7 @@ import type { User } from "../../../types/User/UserTypes";
 import NetWorthCard from "./cards/NetWorthCard";
 import AccountSummaryCard from "./cards/AccountSummaryCard";
 import MonthSelector from "./MonthSelector";
+import RecentTransactionsCard from "./cards/RecentTransactionsCard";
 
 export const UserDashboard: React.FC = () => {
     const auth = useAuth();
@@ -21,6 +22,7 @@ export const UserDashboard: React.FC = () => {
                     throw new Error("Error after getting user from server");
                 }
                 setUser(user);
+                console.log(user.transactions);
             }catch(e){
                 alert("Logging out");
                 auth.logout();
@@ -49,7 +51,7 @@ export const UserDashboard: React.FC = () => {
                 <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 1", height: 120}}/>
                 <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 2", height: 120}}/>
                 <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 1", height: 120}}/>
-                <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 2", height: 120}}/>
+                <RecentTransactionsCard transactions={user.transactions} sx={{gridColumn: "span 2", height: 180}}/>
                 <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 1", height: 120}}/>
             </Box>
             <Box height="100%" display="flex" flexDirection="row" width="35%" marginTop="15px"padding="10px">
