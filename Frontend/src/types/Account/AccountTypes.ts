@@ -3,6 +3,8 @@ import type { BankAccountDto, LoanAccountDto, RevolvingCreditAccountDto } from "
 export interface Account{
     name: string,
     accountType: string,
+    isAsset: boolean,
+    value: number
 }
 
 export interface BankAccount extends Account{
@@ -33,7 +35,9 @@ export function fromBankAccountDto(account: BankAccountDto): BankAccount{
         bankName: account.bankName,
         accountType: account.accountType,
         balance: account.balance,
-        interestRate: account.interestRate
+        interestRate: account.interestRate,
+        isAsset: account.isAsset,
+        value: account.value
     };
 }
 
@@ -48,7 +52,9 @@ export function fromRevolvingCreditAccountDto(account: RevolvingCreditAccountDto
         balance: account.balance,
         interestRate: account.interestRate,
         issuer: account.issuer,
-        creditLimit: account.creditLimit
+        creditLimit: account.creditLimit,
+        isAsset: account.isAsset,
+        value: account.value
     };
 }
 
@@ -65,7 +71,9 @@ export function fromLoanAccountDto(account: LoanAccountDto): LoanAccount{
         interestRate: account.interestRate,
         termMonths: account.termMonths,
         principalBalance: account.principalBalance,
-        isCompoundInterest: account.isCompoundInterest
+        isCompoundInterest: account.isCompoundInterest,
+        isAsset: account.isAsset,
+        value: account.value
     };
 }
 

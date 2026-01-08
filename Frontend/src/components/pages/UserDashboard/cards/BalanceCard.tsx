@@ -5,8 +5,9 @@ import { useTheme } from "@mui/material/styles";
 const BalanceCard: React.FC<{
     title: string,
     balance: number,
+    color?: string,
     sx?: SxProps<Theme>
-}> = ({title, balance, sx}) => {
+}> = ({title, balance, color = "none", sx}) => {
     const theme = useTheme();
 
     return (
@@ -16,7 +17,7 @@ const BalanceCard: React.FC<{
         >
             <Typography variant="subtitle2" sx={{textAlign: "left"}}>{title}</Typography>
             <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "left" }}>
-                <Typography variant="h5" fontWeight="bold">
+                <Typography variant="h5" fontWeight="bold" sx={{color: color}}>
                     {balance.toLocaleString("en-US", { style: "currency", currency: "USD" })}
                 </Typography>
             </Box>

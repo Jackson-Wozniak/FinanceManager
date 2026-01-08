@@ -1,7 +1,9 @@
 
 export interface AccountDto{
     name: string,
-    accountType: string
+    accountType: string,
+    isAsset: boolean,
+    value: number
 }
 
 export interface BankAccountDto extends AccountDto{
