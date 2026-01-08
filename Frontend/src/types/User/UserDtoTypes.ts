@@ -8,7 +8,7 @@ export interface UserTokenDto{
 export interface UserDto{
     username: string,
     netWorth: number,
-    estimatedMonthlyInterestCharges: number,
+    estimatedMonthlyLoanPayments: number,
     bankAccounts: BankAccountDto[],
     revolvingCreditAccounts: RevolvingCreditAccountDto[],
     loanAccounts: LoanAccountDto[],

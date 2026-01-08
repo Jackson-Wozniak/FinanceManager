@@ -4,10 +4,10 @@ import Page from "../../layout/Page";
 import { fetchGetUser } from "../../../api/UserClient";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import type { User } from "../../../types/User/UserTypes";
-import NetWorthCard from "./cards/NetWorthCard";
 import AccountSummaryCard from "./cards/AccountSummaryCard";
 import MonthSelector from "./MonthSelector";
 import RecentTransactionsCard from "./cards/RecentTransactionsCard";
+import BalanceCard from "./cards/BalanceCard";
 
 export const UserDashboard: React.FC = () => {
     const auth = useAuth();
@@ -22,7 +22,6 @@ export const UserDashboard: React.FC = () => {
                     throw new Error("Error after getting user from server");
                 }
                 setUser(user);
-                console.log(user.transactions);
             }catch(e){
                 alert("Logging out");
                 auth.logout();
@@ -47,12 +46,9 @@ export const UserDashboard: React.FC = () => {
                     gridTemplateColumns: "repeat(3, 1fr)",
                     gap: 2,
                 }}>
-                <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 2", height: 120}}/>
-                <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 1", height: 120}}/>
-                <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 2", height: 120}}/>
-                <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 1", height: 120}}/>
+                <BalanceCard title="Net Worth" balance={user.netWorth} sx={{gridColumn: "span 1", height: 120}}/>
+                <BalanceCard title="Monthly Loan Charges" balance={user.estimatedMonthlyInterestCharges} sx={{gridColumn: "span 1", height: 120}}/>
                 <RecentTransactionsCard transactions={user.transactions} sx={{gridColumn: "span 2", height: 180}}/>
-                <NetWorthCard balance={user.netWorth} sx={{gridColumn: "span 1", height: 120}}/>
             </Box>
             <Box height="100%" display="flex" flexDirection="row" width="35%" marginTop="15px"padding="10px">
                 <AccountSummaryCard setUser={setUser} bankAccounts={user.bankAccounts} 

@@ -26,7 +26,7 @@ export function fromUserDto(user: UserDto): User{
     return {
         username: user.username,
         netWorth: user.netWorth,
-        estimatedMonthlyInterestCharges: user.estimatedMonthlyInterestCharges,
+        estimatedMonthlyInterestCharges: user.estimatedMonthlyLoanPayments,
         bankAccounts: fromBankAccountDtos(user.bankAccounts),
         revolvingCreditAccounts: fromRevolvingCreditAccountDtos(user.revolvingCreditAccounts),
         loanAccounts: fromLoanAccountDtos(user.loanAccounts),

@@ -25,8 +25,8 @@ const RecentTransactionsCard: React.FC<{
             </TableRow>
           </TableHead>
           <TableBody>
-            {transactions.map((row) => (
-              <TableRow key={row.message}>
+            {transactions.map((row: Transaction, index: number) => (
+              <TableRow key={index}>
                 <TableCell>{row.message}</TableCell>
                 <TableCell>{row.value}</TableCell>
                 <TableCell>{row.dateTime.toDateString()}</TableCell>
