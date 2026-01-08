@@ -13,28 +13,11 @@ import GridLayout, { useContainerWidth, type Layout, type LayoutItem } from "rea
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 
-interface CardItem {
-  id: string;
-  title: string;
-  w: number; // width in grid units
-  h: number; // height in grid units
-}
-
-const cards: CardItem[] = [
-  { id: "1", title: "Card 1", w: 1, h: 1 },
-  { id: "2", title: "Card 2", w: 2, h: 2 },
-  { id: "3", title: "Card 3", w: 1, h: 1 },
-  { id: "4", title: "Card 4", w: 1, h: 2 },
-  { id: "5", title: "Card 5", w: 1, h: 1 },
+const layout: LayoutItem[] = [
+  { i: "NetWorthCard", x: 0, y: 0, w: 1, h: 1 },
+  { i: "RecentTransactionsCard", x: 0, y: 1, w: 1, h: 1 },
+  { i: "LoanPaymentsCard", x: 1, y: 0, w: 2, h: 2 },
 ];
-
-const layout: LayoutItem[] = cards.map((card, index) => ({
-    i: card.id,
-    x: index % 3, // initial x position
-    y: Math.floor(index / 3), // initial y position
-    w: card.w,
-    h: card.h,
-}));
 
 export const UserDashboard: React.FC = () => {
     const auth = useAuth();
@@ -65,28 +48,28 @@ export const UserDashboard: React.FC = () => {
 
     return (
         <Page sx={{flexDirection: "row"}}>
-            <Box height="100%" display="flex" flexDirection="row" width="10%" marginTop="2px" padding="10px">
+            <Box height="100%" display="flex" flexDirection="row" width="8%" marginTop="2px" padding="10px">
                 <MonthSelector/>
             </Box>
             
-            <Box width="55%" ref={containerRef}>{mounted && (
-                /*
-                    done for the night, but I believe that if I use CardItem with ReactNode,
-                    I can inject the card component into the CardItem array for each, and
-                    use the layout like was used above and in previous commit to correctly
-                    size each card as I want
-                */
+            <Box width="60%" ref={containerRef}>{mounted && (
                 <GridLayout
-                    gridConfig={{cols: 3}}
+                    gridConfig={{cols: 3, rowHeight: 100, margin: [20, 30]}}
                     layout={layout}
-                    width={width}
+                    width={containerRef.current?.offsetWidth!!}
                 >
-                    <BalanceCard title="Net Worth" balance={user.netWorth} sx={{width: "100%", height: 120}}/>
-                    <BalanceCard title="Monthly Loan Charges" balance={user.estimatedMonthlyInterestCharges} sx={{gridColumn: "span 1", height: 120}}/>
-                    <RecentTransactionsCard transactions={user.transactions} sx={{gridColumn: "span 2", height: 180}}/>
+                    <div key="NetWorthCard" style={{ width: "100%", height: "100%" }}>
+                        <BalanceCard title="Net Worth" balance={user.netWorth} sx={{height: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}/>
+                    </div>
+                    <div key="RecentTransactionsCard" style={{ width: "100%", height: "100%" }}>
+                        <BalanceCard title="Monthly Loan Charges" balance={user.estimatedMonthlyInterestCharges} sx={{height: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}/>
+                    </div>
+                    <div key="LoanPaymentsCard" style={{ width: "100%", height: "100%" }}>
+                        <RecentTransactionsCard transactions={user.transactions} sx={{height: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}/>
+                    </div>
                 </GridLayout>
             )}</Box>
-            <Box height="100%" display="flex" flexDirection="row" width="35%" marginTop="15px"padding="10px">
+            <Box height="100%" display="flex" flexDirection="row" width="32%" marginTop="15px"padding="10px">
                 <AccountSummaryCard setUser={setUser} bankAccounts={user.bankAccounts} 
                     loanAccounts={user.loanAccounts} revolvingCreditAccounts={user.revolvingCreditAccounts}/>
             </Box>

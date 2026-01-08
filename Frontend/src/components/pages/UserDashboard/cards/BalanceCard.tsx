@@ -11,7 +11,7 @@ const BalanceCard: React.FC<{
 
     return (
         <Box sx={{backgroundColor: theme.palette.background.secondary, 
-            padding: "15px 35px 15px 35px", borderRadius: "5px", margin: "10px", ...sx}}>
+            borderRadius: "5px", ...sx}}>
             <Typography>{title}</Typography>
             <Typography>{balance.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</Typography>
         </Box>
