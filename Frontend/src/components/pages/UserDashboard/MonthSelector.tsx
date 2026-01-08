@@ -6,11 +6,10 @@ const MonthSelector: React.FC<{
     const theme = useTheme();
 
     return (
-        <Box sx={{backgroundColor: theme.palette.background.secondary, 
-            padding: "15px 35px 15px 35px", borderRadius: "50px",
-            width: "40%", height: "100%", display: "flex", flexDirection: "column",
-            alignItems: "center", justifyContent: "space-evenly", textAlign: "center",
-            margin: "10px", ...sx}}
+        <Box sx={{backgroundColor: theme.palette.background.secondary,
+            padding: 0, borderRadius: "50px", margin: 0,
+            width: "80%", height: "100%", display: "flex", flexDirection: "column",
+            alignItems: "center", justifyContent: "space-evenly", textAlign: "center", ...sx}}
         >
             <Typography fontWeight="bold">2026</Typography>  
             <Button variant="text">Jan</Button>
