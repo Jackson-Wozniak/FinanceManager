@@ -16,9 +16,10 @@ import ExpenseChartCard from "./cards/ExpenseChartCard";
 
 const layout: LayoutItem[] = [
   { i: "NetWorthCard", x: 0, y: 0, w: 1, h: 1 },
-  { i: "RecentTransactionsCard", x: 0, y: 1, w: 1, h: 1 },
-  { i: "LoanPaymentsCard", x: 1, y: 0, w: 2, h: 2 },
-  { i: "ExpenseChartCard", x: 0, y: 2, w: 2, h: 2 },
+  { i: "LoanPaymentsCard", x: 1, y: 0, w: 1, h: 1 },
+  { i: "ExpenseChartCard", x: 0, y: 1, w: 2, h: 2 },
+  { i: "RecentTransactionsCard", x: 2, y: 0, w: 2, h: 3 },
+  { i: "AccountsCard", x: 4, y: 0, w: 2, h: 4 },
 ];
 
 export const UserDashboard: React.FC = () => {
@@ -54,30 +55,30 @@ export const UserDashboard: React.FC = () => {
                 <MonthSelector/>
             </Box>
             
-            <Box width="66%" ref={containerRef}>{mounted && (
+            <Box width="92%" ref={containerRef}>{mounted && (
                 <GridLayout
-                    gridConfig={{cols: 3, rowHeight: 95, margin: [20, 30]}}
+                    gridConfig={{cols: 6, rowHeight: 100, margin: [20, 30]}}
                     layout={layout}
                     width={containerRef.current?.offsetWidth!!}
                 >
                     <div key="NetWorthCard" style={{ width: "100%", height: "100%" }}>
                         <BalanceCard title="Net Worth" balance={user.netWorth} sx={{height: "100%", display: "flex", justifyContent: "center"}}/>
                     </div>
-                    <div key="RecentTransactionsCard" style={{ width: "100%", height: "100%" }}>
+                    <div key="LoanPaymentsCard" style={{ width: "100%", height: "100%" }}>
                         <BalanceCard title="Monthly Loan Charges" balance={user.estimatedMonthlyInterestCharges} sx={{height: "100%", display: "flex", justifyContent: "center"}}/>
                     </div>
-                    <div key="LoanPaymentsCard" style={{ width: "100%", height: "100%" }}>
-                        <RecentTransactionsCard transactions={user.transactions} sx={{height: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}/>
+                    <div key="RecentTransactionsCard" style={{ width: "100%", height: "100%" }}>
+                        <RecentTransactionsCard transactions={user.transactions} sx={{height: "100%"}}/>
                     </div>
-                    <div key="ExpenseChartCard" style={{ width: "100%", height: "100%" }}>
+                    <div key="ExpenseChartCard" >
                         <ExpenseChartCard transactions={user.transactions}/>
+                    </div>
+                    <div key="AccountsCard" style={{ width: "100%", height: "100%" }}>
+                        <AccountSummaryCard setUser={setUser} bankAccounts={user.bankAccounts} 
+                            loanAccounts={user.loanAccounts} revolvingCreditAccounts={user.revolvingCreditAccounts}/>
                     </div>
                 </GridLayout>
             )}</Box>
-            <Box height="100%" display="flex" flexDirection="row" width="26%" padding="10px">
-                <AccountSummaryCard setUser={setUser} bankAccounts={user.bankAccounts} 
-                    loanAccounts={user.loanAccounts} revolvingCreditAccounts={user.revolvingCreditAccounts}/>
-            </Box>
         </Page>
     )
 }

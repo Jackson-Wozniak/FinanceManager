@@ -14,7 +14,7 @@ const BalanceCard: React.FC<{
             flexDirection: "column", borderRadius: "5px", textAlign: "left", paddingTop: "10px", 
             paddingLeft: "15px", ...sx}}
         >
-            <Typography variant="subtitle1" sx={{textAlign: "left"}}>{title}</Typography>
+            <Typography variant="subtitle2" sx={{textAlign: "left"}}>{title}</Typography>
             <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "left" }}>
                 <Typography variant="h5" fontWeight="bold">
                     {balance.toLocaleString("en-US", { style: "currency", currency: "USD" })}

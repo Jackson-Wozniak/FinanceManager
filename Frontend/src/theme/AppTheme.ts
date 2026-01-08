@@ -37,7 +37,8 @@ export const DarkTheme = createTheme({
         background : {
             primary: "rgb(10, 15, 38)",//"#0d1117",
             secondary: "rgb(24, 28, 61)",//#151b23",
-            accent: "#2e2e2e"
+            accent: "rgb(30, 33, 78)",//"#2e2e2e",
+            secondaryAccent: "rgb(27, 30, 70)",
         },
         text: {
             primary: "#ffffff",
