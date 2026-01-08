@@ -34,7 +34,7 @@ const layout: LayoutItem[] = cards.map((card, index) => ({
     y: Math.floor(index / 3), // initial y position
     w: card.w,
     h: card.h,
-  }));
+}));
 
 export const UserDashboard: React.FC = () => {
     const auth = useAuth();
@@ -69,34 +69,23 @@ export const UserDashboard: React.FC = () => {
                 <MonthSelector/>
             </Box>
             
-            <Box width="55%" ref={containerRef}>
-{mounted && <GridLayout
-      className="layout"
-      gridConfig={{cols: 3}}
-      layout={layout}
-      width={width}
-    >
-      {cards.map((card) => (
-        <div key={card.id}>
-          <Card sx={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <CardContent>
-              <Typography>{card.title}</Typography>
-            </CardContent>
-          </Card>
-        </div>
-      ))}
-    </GridLayout>}
-            </Box>
-            {/* <Box height="100%" width="55%" marginTop="15px" 
-                padding="10px" sx={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
-                    gap: 2,
-                }}>
-                <BalanceCard title="Net Worth" balance={user.netWorth} sx={{gridColumn: "span 1", height: 120}}/>
-                <BalanceCard title="Monthly Loan Charges" balance={user.estimatedMonthlyInterestCharges} sx={{gridColumn: "span 1", height: 120}}/>
-                <RecentTransactionsCard transactions={user.transactions} sx={{gridColumn: "span 2", height: 180}}/>
-            </Box> */}
+            <Box width="55%" ref={containerRef}>{mounted && (
+                /*
+                    done for the night, but I believe that if I use CardItem with ReactNode,
+                    I can inject the card component into the CardItem array for each, and
+                    use the layout like was used above and in previous commit to correctly
+                    size each card as I want
+                */
+                <GridLayout
+                    gridConfig={{cols: 3}}
+                    layout={layout}
+                    width={width}
+                >
+                    <BalanceCard title="Net Worth" balance={user.netWorth} sx={{width: "100%", height: 120}}/>
+                    <BalanceCard title="Monthly Loan Charges" balance={user.estimatedMonthlyInterestCharges} sx={{gridColumn: "span 1", height: 120}}/>
+                    <RecentTransactionsCard transactions={user.transactions} sx={{gridColumn: "span 2", height: 180}}/>
+                </GridLayout>
+            )}</Box>
             <Box height="100%" display="flex" flexDirection="row" width="35%" marginTop="15px"padding="10px">
                 <AccountSummaryCard setUser={setUser} bankAccounts={user.bankAccounts} 
                     loanAccounts={user.loanAccounts} revolvingCreditAccounts={user.revolvingCreditAccounts}/>
