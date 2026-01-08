@@ -3,6 +3,7 @@ using Server.Application.Accounts.Entities;
 using Server.Application.Accounts.Repositories;
 using Server.Application.Users.Entities;
 using Server.Application.Users.Services;
+using Server.Core.Exceptions;
 
 namespace Server.Application.Accounts.Services;
 
@@ -33,5 +34,15 @@ public class AccountService(UserService userService, AccountRepository accountRe
         user.Accounts.Add(account);
         await accountRepository.SaveAsync(account);
         return user;
+    }
+
+    public async Task<Account> FindAccountByNameAsync(string name)
+    {
+        var account = await accountRepository.FindByNameAsync(name);
+        if (account is null)
+        {
+            throw new NotFoundException("Cannot find matching account");
+        }
+        return account;
     }
 }

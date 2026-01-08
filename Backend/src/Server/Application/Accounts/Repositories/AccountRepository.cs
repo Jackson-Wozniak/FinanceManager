@@ -1,4 +1,5 @@
-﻿using Server.Application.Accounts.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Server.Application.Accounts.Entities;
 using Server.Infrastructure.Data;
 
 namespace Server.Application.Accounts.Repositories;
@@ -9,5 +10,12 @@ public class AccountRepository(ApplicationDbContext context)
     {
         await context.AddAsync(account);
         await context.SaveChangesAsync();
+    }
+
+    public async Task<Account?> FindByNameAsync(string name)
+    {
+        return await context.Accounts
+            .Include(a => a.Transactions)
+            .FirstOrDefaultAsync(a => a.Name.Equals(name));
     }
 }
