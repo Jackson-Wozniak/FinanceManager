@@ -1,4 +1,6 @@
-﻿namespace Server.API.Contracts;
+﻿using Server.Application.Transactions.Enums;
+
+namespace Server.API.Contracts;
 
 public class TransactionCreationRequest
 {
@@ -8,4 +10,9 @@ public class TransactionCreationRequest
     public string Category { get; set; }
     public DateTimeOffset DateTime { get; set; }
     public string? AccountName { get; set; }
+
+    public bool IsValidCategory()
+    {
+        return TransactionCategoryUtils.TryParse(Category) is not null;
+    }
 }

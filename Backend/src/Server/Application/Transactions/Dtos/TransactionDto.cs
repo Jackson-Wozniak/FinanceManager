@@ -18,6 +18,6 @@ public class TransactionDto
         IsExpense = transaction.IsExpense;
         Value = Math.Round(transaction.Value, 2);
         DateTime = transaction.DateTime;
-        Category = transaction.Category;
+        Category = transaction.Category.ToString();
     }
 }

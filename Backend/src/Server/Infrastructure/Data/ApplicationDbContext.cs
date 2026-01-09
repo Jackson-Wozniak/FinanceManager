@@ -36,6 +36,10 @@ public class ApplicationDbContext : DbContext
         
         modelBuilder.Entity<Transaction>()
             .ToTable("transactions");
+        
+        modelBuilder.Entity<Transaction>()
+            .Property(e => e.Category)
+            .HasConversion<string>();
             
         modelBuilder.Entity<Transaction>()    
             .HasOne(a => a.User)
