@@ -1,8 +1,8 @@
 import type { Transaction } from "../../../../types/Transaction/TransactionTypes";
-import { Doughnut } from 'react-chartjs-2';
-import { Box, useTheme } from "@mui/material";
+import { Box, Card, CardHeader, Typography, useTheme } from "@mui/material";
 import { useEffect, useState } from "react";
-import 'chart.js/auto';
+import TransactionCategoryIcon from "../../../shared/transaction/TransactionCategoryIcon";
+import type { TransactionCategory } from "../../../../types/Transaction/TransactionEnums";
 
 const ExpenseChartCard: React.FC<{
     transactions: Transaction[]
@@ -14,58 +14,29 @@ const ExpenseChartCard: React.FC<{
         const sums = new Map<string, number>();
 
         for(const transaction of transactions){
+            if(!transaction.isExpense) continue;
             sums.set(transaction.category, (sums.get(transaction.category) || 0) + transaction.value);
         }
         setMap(Array.from(sums));
     }, [transactions]);
 
-    const data = {
-        labels: map.map(([first, _]) => first),
-        datasets: [{
-            data: map.map(([_, second]) => second),
-            backgroundColor: [
-                'rgb(255, 99, 132)',
-                'rgb(54, 162, 235)',
-                'rgb(255, 205, 86)'
-            ],
-            hoverOffset: 4,
-            borderColor: 'white',
-            borderWidth: 1
-        }]
-    };
-
-    const options: any = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            tooltip: {
-                callbacks: {
-                    label: function(context: any) {
-                        const value = context.raw;
-                        return `$${value.toLocaleString("en-US")} spent this month`;
-                    },
-                },
-            },
-            legend: {
-                position: 'right',
-                labels: {
-                    color: "white",
-                }
-            },
-            title: {
-                display: true,
-                text: "Expenses by Category",
-                color: "white",
-                font: { size: 18, weight: "bold" },
-                padding: { top: 10, bottom: 20 },
-            },
-        },
-    };
-
     return (
-        <Box sx={{height: "100%", backgroundColor: theme.palette.background.secondary, display: "flex", alignItems: "center", justifyContent: "center", paddingBottom: "10px"}}>
-            <Doughnut data={data} options={options} height="100%" width="100%"/>
-        </Box>
+        <Card sx={{maxHeight: "100%", background: theme.palette.background.secondary, overflowY: "auto"}}>
+            <CardHeader title={<Typography variant="h6">Spend by Category</Typography>}/>
+            <Box sx={{width: "100%", display: "grid", gridTemplateColumns: "repeat(2, 1fr)", alignItems: "center", justifyContent: "center"}}>
+                {map.map((pair: [string, number], index: number) => {
+                    return (
+                        <Box key={index} display="flex" flexDirection="row" width="100%" alignItems="center" justifyContent="center" mb="10px">
+                            <TransactionCategoryIcon category={pair[0] as TransactionCategory}/>
+                            <Box marginLeft="15px" display="flex" flexDirection="column" width="50%" alignItems="flex-start" justifyContent="center">
+                                <Typography>{pair[0]}</Typography>
+                                <Typography>{pair[1].toLocaleString("en-US", { style: "currency", currency: "USD" })}</Typography>
+                            </Box>
+                        </Box>
+                    )
+                })}
+            </Box>
+        </Card>
     )
 }
 

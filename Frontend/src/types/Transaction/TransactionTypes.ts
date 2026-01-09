@@ -1,11 +1,12 @@
 import type { TransactionDto } from "./TransactionDtoTypes";
+import { TransactionCategory } from "./TransactionEnums";
 
 export interface Transaction{
     message: string,
     isExpense: boolean,
     value: number,
     dateTime: Date,
-    category: string,
+    category: TransactionCategory,
 }
 
 export function fromTransactionDto(transaction: TransactionDto): Transaction{
@@ -13,7 +14,7 @@ export function fromTransactionDto(transaction: TransactionDto): Transaction{
         message: transaction.message,
         value: transaction.value,
         isExpense: transaction.isExpense,
-        category: transaction.category,
+        category: transaction.category as TransactionCategory,
         dateTime: new Date(transaction.dateTime)
     };
 }
