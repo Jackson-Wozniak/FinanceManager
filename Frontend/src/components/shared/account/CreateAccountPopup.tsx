@@ -18,42 +18,43 @@ import { CreateAccountReducer, initialCreateAccountForm, mapToBankAccountDto, ma
 import BankAccountInputs from "./inputs/BankAccountInputs";
 import LoanAccountInputs from "./inputs/LoanAccountInputs";
 import CreditAccountInputs from "./inputs/CreditAccountInputs";
+import type { AccountsListing } from "../../../types/Account/AccountTypes";
 
 const CreateAccountPopup: React.FC<{
-    setUser: (user: User) => void,
+    setAccountsListing: (listing: AccountsListing) => void,
     open: boolean,
     handleClose: () => void
-}> = ({setUser, open, handleClose}) => {
+}> = ({setAccountsListing, open, handleClose}) => {
     const auth = useAuth();
     const [formState, createAccountDispatch] = useReducer(CreateAccountReducer, initialCreateAccountForm);
 
     const handleSubmit = async () => {
         try{
             if(auth.token == null) return;
-            let user: User;
+            let accountsListing: AccountsListing;
             switch(formState.accountType){
                 case AccountType.Checking:
                 case AccountType.Savings: {
                     const dto = mapToBankAccountDto(formState);
-                    user = await fetchCreateBankAccount(auth.token, dto);
+                    accountsListing = await fetchCreateBankAccount(auth.token, dto);
                     break;
                 }
                 case AccountType.CreditCard: {
                     const dto = mapToRevolvingCreditAccountDto(formState);
-                    user = await fetchCreateRevolvingCreditAccount(auth.token, dto);
+                    accountsListing = await fetchCreateRevolvingCreditAccount(auth.token, dto);
                     break;
                 }
                 case AccountType.CarLoan:
                 case AccountType.StudentLoan: {
                     const dto = mapToLoanAccountDto(formState);
-                    user = await fetchCreateLoanAccount(auth.token, dto);
+                    accountsListing = await fetchCreateLoanAccount(auth.token, dto);
                     break;
                 }
             }
-            if(user == null){
+            if(accountsListing == null){
                 throw new Error("Error after getting user from server");
             }
-            setUser(user);
+            setAccountsListing(accountsListing);
             handleClose();
         }catch(e){
             alert(e);

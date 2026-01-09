@@ -86,7 +86,7 @@ export const UserDashboard: React.FC = () => {
                         <ExpenseChartCard transactions={user.transactions}/>
                     </div>
                     <div key="AccountsCard" style={{ width: "100%", height: "100%" }}>
-                        <AccountSummaryCard setUser={setUser} bankAccounts={user.bankAccounts} 
+                        <AccountSummaryCard bankAccounts={user.bankAccounts} 
                             loanAccounts={user.loanAccounts} revolvingCreditAccounts={user.revolvingCreditAccounts}/>
                     </div>
                 </GridLayout>

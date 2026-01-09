@@ -27,7 +27,7 @@ public class AccountController(UserAuthService userAuthService,
     {
         UserContext userContext = await userAuthService.GetAuthenticatedUserAsync();
         var user = await accountService.AddBankAccountAsync(userContext.UserId, request);
-        return Ok(new UserDto(user));
+        return Ok(new AccountsListingDto(user.Accounts));
     }
     
     [HttpPost("revolving_credit")]
@@ -35,7 +35,7 @@ public class AccountController(UserAuthService userAuthService,
     {
         UserContext userContext = await userAuthService.GetAuthenticatedUserAsync();
         var user = await accountService.AddRevolvingCreditAccountAsync(userContext.UserId, request);
-        return Ok(new UserDto(user));
+        return Ok(new AccountsListingDto(user.Accounts));
     }
     
     [HttpPost("loan")]
@@ -43,6 +43,6 @@ public class AccountController(UserAuthService userAuthService,
     {
         UserContext userContext = await userAuthService.GetAuthenticatedUserAsync();
         var user = await accountService.AddLoanAccountAsync(userContext.UserId, request);
-        return Ok(new UserDto(user));
+        return Ok(new AccountsListingDto(user.Accounts));
     }
 }

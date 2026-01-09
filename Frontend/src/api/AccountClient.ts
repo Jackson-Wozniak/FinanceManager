@@ -1,7 +1,5 @@
 import type { AccountsListingDto, BankAccountDto, LoanAccountDto, RevolvingCreditAccountDto } from "../types/Account/AccountDtoTypes";
 import { fromAccountsListingDto, type AccountsListing } from "../types/Account/AccountTypes";
-import type { UserDto } from "../types/User/UserDtoTypes";
-import { fromUserDto, type User } from "../types/User/UserTypes";
 
 export async function fetchGetAccountsListing(token: string): Promise<AccountsListing>{
     const response = await fetch("https://localhost:7082/api/Account", {
@@ -26,7 +24,7 @@ export async function fetchGetAccountsListing(token: string): Promise<AccountsLi
     return fromAccountsListingDto(data);
 }
 
-export async function fetchCreateBankAccount(token: string, account: BankAccountDto): Promise<User>{
+export async function fetchCreateBankAccount(token: string, account: BankAccountDto): Promise<AccountsListing>{
     const response = await fetch("https://localhost:7082/api/Account/bank", {
         method: "POST",
         body: JSON.stringify(account),
@@ -41,16 +39,16 @@ export async function fetchCreateBankAccount(token: string, account: BankAccount
         throw new Error(errorMessage || `HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json() as UserDto;
+    const data = await response.json() as AccountsListing;
 
     if(data == null){
         throw new Error("Error getting user from server");
     }
 
-    return fromUserDto(data);
+    return fromAccountsListingDto(data);
 }
 
-export async function fetchCreateRevolvingCreditAccount(token: string, account: RevolvingCreditAccountDto): Promise<User>{
+export async function fetchCreateRevolvingCreditAccount(token: string, account: RevolvingCreditAccountDto): Promise<AccountsListing>{
     const response = await fetch("https://localhost:7082/api/Account/revolving_credit", {
         method: "POST",
         body: JSON.stringify(account),
@@ -65,16 +63,16 @@ export async function fetchCreateRevolvingCreditAccount(token: string, account: 
         throw new Error(errorMessage || `HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json() as UserDto;
+    const data = await response.json() as AccountsListing;
 
     if(data == null){
         throw new Error("Error getting user from server");
     }
 
-    return fromUserDto(data);
+    return fromAccountsListingDto(data);
 }
 
-export async function fetchCreateLoanAccount(token: string, account: LoanAccountDto): Promise<User>{
+export async function fetchCreateLoanAccount(token: string, account: LoanAccountDto): Promise<AccountsListing>{
     const response = await fetch("https://localhost:7082/api/Account/loan", {
         method: "POST",
         body: JSON.stringify(account),
@@ -89,11 +87,11 @@ export async function fetchCreateLoanAccount(token: string, account: LoanAccount
         throw new Error(errorMessage || `HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json() as UserDto;
+    const data = await response.json() as AccountsListing;
 
     if(data == null){
         throw new Error("Error getting user from server");
     }
 
-    return fromUserDto(data);
+    return fromAccountsListingDto(data);
 }

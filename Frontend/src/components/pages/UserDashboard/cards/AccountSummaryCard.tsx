@@ -11,11 +11,9 @@ import { Link } from "react-router-dom";
 const AccountSummaryCard: React.FC<{
     bankAccounts: BankAccount[],
     revolvingCreditAccounts: RevolvingCreditAccount[],
-    loanAccounts: LoanAccount[],
-    setUser: (user: User) => void
-}> = ({bankAccounts, revolvingCreditAccounts, loanAccounts, setUser}) => {
+    loanAccounts: LoanAccount[]
+}> = ({bankAccounts, revolvingCreditAccounts, loanAccounts}) => {
     const theme = useTheme();
-    const [showAddAccountDialog, setShowAddAccountDialog] = useState<boolean>(false);
 
     const renderRows = (accounts: { name: string; balance: number }[]) =>
         accounts.map((acc, index) => (
@@ -54,8 +52,7 @@ const AccountSummaryCard: React.FC<{
                 <hr/>
                 {renderRows(loanAccounts)}
             </Box>
-            <CreateAccountPopup open={showAddAccountDialog} 
-                handleClose={() => setShowAddAccountDialog(false)} setUser={setUser}/>
+            
         </Box>
     );
 }

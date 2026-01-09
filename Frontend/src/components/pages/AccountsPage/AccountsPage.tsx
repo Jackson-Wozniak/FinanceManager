@@ -1,15 +1,17 @@
 import TableContainer from "@mui/material/TableContainer";
 import Page from "../../layout/Page";
-import { Table, TableHead, TableRow, TableCell, TableBody, useTheme } from "@mui/material";
+import { Table, TableHead, TableRow, TableCell, TableBody, useTheme, Button } from "@mui/material";
 import { useAuth } from "../../../providers/AuthProvider";
 import { useEffect, useState } from "react";
 import type { AccountsListing, BankAccount, LoanAccount, RevolvingCreditAccount } from "../../../types/Account/AccountTypes";
 import { fetchGetAccountsListing } from "../../../api/AccountClient";
+import CreateAccountPopup from "../../shared/account/CreateAccountPopup";
 
 const AccountsPage: React.FC = () => {
     const auth = useAuth();
     const theme = useTheme();
     const [accountsListing, setAccountsListing] = useState<AccountsListing | undefined>();
+    const [showAddAccountDialog, setShowAddAccountDialog] = useState<boolean>(false);
 
     useEffect(() => {
         const fetchAccounts = async () => {
@@ -29,6 +31,7 @@ const AccountsPage: React.FC = () => {
 
     return (
         <Page alignment="center">
+            <Button onClick={() => setShowAddAccountDialog(true)}>Add</Button>
             <TableContainer sx={{width: "100%", backgroundColor: "none", border: "none", marginTop: "20px", padding: "20px", borderRadius: "10px"}}>
         <Table size="medium">
           <TableHead>
@@ -67,6 +70,9 @@ const AccountsPage: React.FC = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <CreateAccountPopup open={showAddAccountDialog} 
+                handleClose={() => setShowAddAccountDialog(false)} setAccountsListing={setAccountsListing}/>
         </Page>
     )
 }
