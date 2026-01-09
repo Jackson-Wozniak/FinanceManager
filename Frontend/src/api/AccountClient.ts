@@ -1,6 +1,30 @@
-import type { BankAccountDto, LoanAccountDto, RevolvingCreditAccountDto } from "../types/Account/AccountDtoTypes";
+import type { AccountsListingDto, BankAccountDto, LoanAccountDto, RevolvingCreditAccountDto } from "../types/Account/AccountDtoTypes";
+import { fromAccountsListingDto, type AccountsListing } from "../types/Account/AccountTypes";
 import type { UserDto } from "../types/User/UserDtoTypes";
 import { fromUserDto, type User } from "../types/User/UserTypes";
+
+export async function fetchGetAccountsListing(token: string): Promise<AccountsListing>{
+    const response = await fetch("https://localhost:7082/api/Account", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    });
+
+    if(!response.ok){
+        const errorMessage = await response.text();
+        throw new Error(errorMessage || `HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json() as AccountsListingDto;
+
+    if(data == null){
+        throw new Error("Error getting accounts listing from server");
+    }
+
+    return fromAccountsListingDto(data);
+}
 
 export async function fetchCreateBankAccount(token: string, account: BankAccountDto): Promise<User>{
     const response = await fetch("https://localhost:7082/api/Account/bank", {

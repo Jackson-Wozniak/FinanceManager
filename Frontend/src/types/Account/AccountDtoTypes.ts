@@ -45,3 +45,9 @@ export interface NewCreditAccountDto{
     termMonths: number,
     principalBalance: number
 }
+
+export interface AccountsListingDto{
+    bankAccounts: BankAccountDto[],
+    loanAccounts: LoanAccountDto[],
+    revolvingCreditAccounts: RevolvingCreditAccountDto[]
+}

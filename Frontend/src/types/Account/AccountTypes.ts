@@ -1,4 +1,4 @@
-import type { BankAccountDto, LoanAccountDto, RevolvingCreditAccountDto } from "./AccountDtoTypes";
+import type { AccountsListingDto, BankAccountDto, LoanAccountDto, RevolvingCreditAccountDto } from "./AccountDtoTypes";
 
 export interface Account{
     name: string,
@@ -27,6 +27,12 @@ export interface LoanAccount extends Account{
     interestRate: number,
     termMonths: number,
     isCompoundInterest: boolean
+}
+
+export interface AccountsListing{
+    bankAccounts: BankAccount[],
+    loanAccounts: LoanAccount[],
+    revolvingCreditAccounts: RevolvingCreditAccount[]
 }
 
 export function fromBankAccountDto(account: BankAccountDto): BankAccount{
@@ -79,4 +85,12 @@ export function fromLoanAccountDto(account: LoanAccountDto): LoanAccount{
 
 export function fromLoanAccountDtos(accounts: LoanAccountDto[]): LoanAccount[]{
     return accounts.map(a => fromLoanAccountDto(a));
+}
+
+export function fromAccountsListingDto(listing: AccountsListingDto): AccountsListing{
+    return {
+        bankAccounts: listing.bankAccounts.map(a => fromBankAccountDto(a)),
+        loanAccounts: listing.loanAccounts.map(a => fromLoanAccountDto(a)),
+        revolvingCreditAccounts: listing.revolvingCreditAccounts.map(a => fromRevolvingCreditAccountDto(a))
+    }
 }
