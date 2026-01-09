@@ -9,6 +9,11 @@ namespace Server.Application.Accounts.Services;
 
 public class AccountService(UserService userService, AccountRepository accountRepository)
 {
+    public async Task<List<Account>> FindAccountsAsync(long userId, bool loadTransactions = true)
+    {
+        return await accountRepository.FindAllByUserIdAsync(userId, loadTransactions);
+    }
+    
     public async Task<User> AddBankAccountAsync(long userId, BankAccountCreationRequest request)
     {
         var user = await userService.GetUserByIdAsync(userId);

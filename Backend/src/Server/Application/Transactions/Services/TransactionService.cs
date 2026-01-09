@@ -5,6 +5,7 @@ using Server.Application.Transactions.Entities;
 using Server.Application.Transactions.Repositories;
 using Server.Application.Users.Entities;
 using Server.Application.Users.Services;
+using Server.Core.Exceptions;
 
 namespace Server.Application.Transactions.Services;
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Server.API.Contracts.AccountCreation;
+using Server.Application.Accounts.Dtos;
 using Server.Application.Accounts.Services;
 using Server.Application.Users.Dtos;
 using Server.Application.Users.Security;
@@ -14,6 +15,13 @@ namespace Server.API.Controllers;
 public class AccountController(UserAuthService userAuthService, 
     AccountService accountService) : ControllerBase
 {
+    public async Task<IActionResult> GetAccountsListingAsync()
+    {
+        UserContext userContext = await userAuthService.GetAuthenticatedUserAsync();
+        var accounts = await accountService.FindAccountsAsync(userContext.UserId, false);
+        return Ok(new AccountsListingDto(accounts));
+    }
+    
     [HttpPost("bank")]
     public async Task<IActionResult> AddAccountAsync([FromBody] BankAccountCreationRequest request)
     {
