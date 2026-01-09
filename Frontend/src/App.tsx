@@ -4,6 +4,7 @@ import LoginPage from "./components/pages/Login/LoginPage"
 import { ThemeProvider } from "@mui/material/styles"
 import { DarkTheme, LightTheme } from "./theme/AppTheme"
 import UserDashboard from "./components/pages/UserDashboard/UserDashboard"
+import AccountsPage from "./components/pages/AccountsPage/AccountsPage"
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                     <Route index element={<Navigate to="/login" replace/>}/>
                     <Route path="/login" element={<LoginPage/>} />
                     <Route path="/dashboard" element={<UserDashboard/>} />
+                    <Route path="/accounts" element={<AccountsPage/>}/>
                 </Routes>
             </ThemeProvider>
         </AuthProvider>

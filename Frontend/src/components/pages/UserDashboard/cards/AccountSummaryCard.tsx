@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import CreateAccountPopup from "../../../shared/account/CreateAccountPopup";
 import { useTheme } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 
 const AccountSummaryCard: React.FC<{
     bankAccounts: BankAccount[],
@@ -36,8 +37,7 @@ const AccountSummaryCard: React.FC<{
             backgroundColor: theme.palette.background.secondary}} display="flex" gap={4} 
             borderRadius="5px" marginLeft="10px" position="relative">
             <Box flex={1} p={2} sx={{overflowY: "auto", paddingBottom: "10px", position: "relative"}}>
-                <Button size="small" sx={{position: "absolute", top: 0, right: 0}} 
-                    onClick={() => setShowAddAccountDialog(true)}>Edit Accounts</Button>
+                <Button component={Link} to="/accounts" size="small" sx={{position: "absolute", top: 0, right: 0}}>Edit Accounts</Button>
                 <Typography variant="h6" mb={1}>
                 Bank Accounts
                 </Typography>

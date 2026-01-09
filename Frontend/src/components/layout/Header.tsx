@@ -22,6 +22,7 @@ const Header: React.FC<{}> = () => {
             display="flex" justifyContent="space-between" alignItems="center" margin={0}>
             <Stack height="100%" direction="row" display="flex" justifyContent="space-evenly" gap={0}>
                 <HeaderLink text="Home" link="/dashboard"/>
+                <HeaderLink text="Accounts" link="/accounts"/>
             </Stack>
             <Box display="flex" alignItems="center" gap={2} height="100%">
                 <Button onClick={auth.logout} variant="text">Logout</Button>              
